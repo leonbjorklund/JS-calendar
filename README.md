@@ -60,3 +60,7 @@ _Skiss att utgå ifrån till er layout (vissa delar så som väder och bilder be
 2. Ärenden för väl godkänt är gjorda.
 
 <H4>LYCKA TILL!</H4>
+
+
+<h3>Länk till Figma skiss</h3>
+https://www.figma.com/file/GqS5tO7JESqVB5hsnfT1KP/Kalenderverktyg?node-id=0%3A1&t=5W5OtTdmvx6m40YB-3
