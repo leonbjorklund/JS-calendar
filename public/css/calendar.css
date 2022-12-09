@@ -1,0 +1,7 @@
+/* Reusable classes */
+
+.flex-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
