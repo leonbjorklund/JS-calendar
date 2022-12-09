@@ -1,5 +1,10 @@
 /** Coordinates functions responsible for the calendar's functionality. */
 function runCalendar(month, year) {
+    addMonthChangeListeners(month, year);
+    renderCalendar(month, year);
+}
+
+function renderCalendar(month, year) {
     const monthName = getMonthName(month);
     getDays(month, year);
     renderHead(monthName, year);
@@ -65,19 +70,6 @@ function createDaySquares(days, lastDay, calendarWrapper) {
 }
 
 /**
- * Adds a closing border if needed.
- * @param {number} lastDay Weekday of the last day of the month described as a number.
- * @param {HTMLDivElement} calendarWrapper 
- */
-function addLastBorder(lastDay, calendarWrapper) {
-    if (lastDay < 7) {
-        const lastSquare = document.createElement('div');
-        lastSquare.classList.add('border-left');
-        calendarWrapper.append(lastSquare);
-    }
-}
-
-/**
  * Renders invisible squares to the screen to place the first day of the month in the right column.
  * @param {array} days An array containg the dates of all days in the month.
  */
@@ -86,6 +78,7 @@ function renderBlanks(days, calendarWrapper) {
         if (days[0].getDay() === i + 1) {
             for (let ii = 0; ii < i; ii++) {
                 const blankDay = document.createElement('div');
+                blankDay.classList.add('day');
                 blankDay.classList.add('blank');
                 blankDay.classList.add('border-bottom');
                 calendarWrapper.append(blankDay);
@@ -106,7 +99,47 @@ function setBorder(days, i, daySquare, lastDay) {
         daySquare.classList.add('border-left');
     };
     const lengthMinusLastRow = days.length - lastDay;
+    console.log(lengthMinusLastRow, days.length);
     if (i < lengthMinusLastRow) {
         daySquare.classList.add('border-bottom');
     }
 }
+
+/**
+ * Adds a closing border if needed.
+ * @param {number} lastDay Weekday of the last day of the month described as a number.
+ * @param {HTMLDivElement} calendarWrapper 
+ */
+function addLastBorder(lastDay, calendarWrapper) {
+    if (lastDay != 0) {
+        const lastSquare = document.createElement('div');
+        lastSquare.classList.add('day');
+        lastSquare.classList.add('border-left');
+        calendarWrapper.append(lastSquare);
+    }
+}
+
+function addMonthChangeListeners(month, year) {
+    document.getElementById('previous-month-button').addEventListener('click', () => {
+        clearDays();
+        month--;
+        if (month < 0) {
+            year--;
+            month = 11;
+        }
+        renderCalendar(month, year);
+    })
+    document.getElementById('next-month-button').addEventListener('click', () => {
+        clearDays();
+        month++;
+        if (month > 11) {
+            year++;
+            month = 0;
+        }
+        renderCalendar(month, year);
+    })
+}
+
+function clearDays() {
+    document.getElementById('calendarWrapper').innerHTML = '';
+};
