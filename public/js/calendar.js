@@ -1,33 +1,31 @@
-/** Tracks current month displayed in calendar */
-const calendarData = {
-}
-
 /** Coordinates functions responsible for the calendar's functionality. */
 function runCalendar(month, year) {
-    calendarData.monthNum = month;
-    calendarData.year = year;
-    getMonthName(month);
-    // get date (perform in main.js)
-    // send date to get month function
-    // pass month name and year to head rendering function
+    const monthName = getMonthName(month);
     getDays(month, year);
-    renderHead();
-    // pass day array to day rendering function
-    renderDays();
+    renderHead(monthName, year);
 }
 
+/** Gets the month's name from an array. */
 function getMonthName(month) {
     const monthsList = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    calendarData.month = monthsList[month];
+    return monthsList[month];
 }
 
-/** Renders info in calendar-head from data in calendarData object. */
-function renderHead() {
-    document.getElementById('open-month').innerText = calendarData.month;
-    document.getElementById('open-year').innerText = calendarData.year;
+/**
+ * Renders arguments to calendar head.
+ * @param {string} monthName 
+ * @param {number} year 
+ */
+function renderHead(monthName, year) {
+    document.getElementById('open-month').innerText = monthName;
+    document.getElementById('open-year').innerText = year;
 }
 
-/** Populates list of days in calendarData object. */
+/**
+ * Gets days in month send via arguments. Passes onwards to functions the render days to the screen.
+ * @param {number} month 
+ * @param {number} year 
+ */
 function getDays(month, year) {
     let date = new Date(year, month, 1);
     const days = [];
@@ -35,13 +33,16 @@ function getDays(month, year) {
         days.push(new Date(date));
         date.setDate(date.getDate() + 1);
   }
-  calendarData.days = days;
+  renderDays(days);
 }
 
-/** Gets days from calendarData object and renders a grid square for each day */
-function renderDays() {
-    renderBlanks();
-    for (let i = 0; i < calendarData.days.length; i++) {
+/**
+ * Takes array of dates in month as parameter. Renders to the screen individually in correct columns.
+ * @param {array} days 
+ */
+function renderDays(days) {
+    renderBlanks(days);
+    for (let i = 0; i < days.length; i++) {
         const daySquare = document.createElement('div');
         daySquare.innerText = i + 1;
         daySquare.classList.add('day');
@@ -49,11 +50,13 @@ function renderDays() {
     }
 }
 
-/** Places invisible days on the grid to offset the first day of the month according to weekday. */
-function renderBlanks() {
-    console.log(calendarData.days[0].getDay());
+/**
+ * Renders invisible squares to the screen to place the first day of the month in the right column.
+ * @param {array} days 
+ */
+function renderBlanks(days) {
     for (let i = 0; i < 7; i ++) {
-        if (calendarData.days[0].getDay() === i + 1) {
+        if (days[0].getDay() === i + 1) {
             for (let ii = 0; ii < i; ii++) {
                 const blankDay = document.createElement('div');
                 blankDay.classList.add('blank');
@@ -61,13 +64,4 @@ function renderBlanks() {
         }
         }
     }
-}
-
-/**
- * Takes month and year strings from month object, renders to calendar-head.
- * @param {string} month 
- * @param {string} year 
- */
-function renderCalHead(month, year) {
-    // takes month and year and assigns to header text
 }
