@@ -1,27 +1,24 @@
 /** Tracks current month displayed in calendar */
 const calendarData = {
-    month: 'December', // Eventually updates with date on page load, other months on navigation.
-    monthNum: '12',
-    year: '2022',
 }
 
 /** Coordinates functions responsible for the calendar's functionality. */
-async function runCalendar() {
+function runCalendar(month, year) {
+    calendarData.monthNum = month;
+    calendarData.year = year;
+    getMonthName(month);
     // get date (perform in main.js)
     // send date to get month function
-    await getData();
     // pass month name and year to head rendering function
+    getDays(month, year);
     renderHead();
     // pass day array to day rendering function
     renderDays();
 }
 
-/** Fetches data on month's days from API, parses json, adds data to calendarData object. */
-async function getData() {
-    const data = await fetch(`http://sholiday.faboul.se/dagar/v2.1/${calendarData.year}/${calendarData.monthNum}`)
-    .then((response) => response.json());
-    calendarData.dagar = data.dagar;
-    console.log(calendarData.dagar);
+function getMonthName(month) {
+    const monthsList = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    calendarData.month = monthsList[month];
 }
 
 /** Renders info in calendar-head from data in calendarData object. */
@@ -30,11 +27,21 @@ function renderHead() {
     document.getElementById('open-year').innerText = calendarData.year;
 }
 
+/** Populates list of days in calendarData object. */
+function getDays(month, year) {
+    let date = new Date(year, month, 1);
+    const days = [];
+    while (date.getMonth() === month) {
+        days.push(new Date(date));
+        date.setDate(date.getDate() + 1);
+  }
+  calendarData.days = days;
+}
 
 /** Gets days from calendarData object and renders a grid square for each day */
 function renderDays() {
     renderBlanks();
-    for (let i = 0; i < calendarData.dagar.length; i++) {
+    for (let i = 0; i < calendarData.days.length; i++) {
         const daySquare = document.createElement('div');
         daySquare.innerText = i + 1;
         daySquare.classList.add('day');
@@ -44,9 +51,9 @@ function renderDays() {
 
 /** Places invisible days on the grid to offset the first day of the month according to weekday. */
 function renderBlanks() {
-    const sveDays = ['Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag', 'Sondag'];
+    console.log(calendarData.days[0].getDay());
     for (let i = 0; i < 7; i ++) {
-        if (calendarData.dagar[0].veckodag === sveDays[i]) {
+        if (calendarData.days[0].getDay() === i + 1) {
             for (let ii = 0; ii < i; ii++) {
                 const blankDay = document.createElement('div');
                 blankDay.classList.add('blank');

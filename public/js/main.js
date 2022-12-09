@@ -1,5 +1,7 @@
 addEventListener('DOMContentLoaded', main);
 
 function main() {
-    runCalendar();
+    const date = new Date;
+    runCalendar(date.getMonth(), date.getFullYear());
 }
+
