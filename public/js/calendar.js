@@ -38,30 +38,75 @@ function getDays(month, year) {
 
 /**
  * Takes array of dates in month as parameter. Renders to the screen individually in correct columns.
- * @param {array} days 
+ * @param {array} days An array containg the dates of all days in the month.
  */
 function renderDays(days) {
-    renderBlanks(days);
+    const calendarWrapper = document.getElementById('calendarWrapper');
+    const lastDay = days[days.length - 1].getDay();
+    renderBlanks(days, calendarWrapper);
+    createDaySquares(days, lastDay, calendarWrapper);
+    addLastBorder(lastDay, calendarWrapper);
+}
+
+/**
+ * Creates a square on the calendar for each day of the months width dynamic borders.
+ * @param {array} days An array containg the dates of all days in the month.
+ * @param {number} lastDay Weekday of the last day of the month described as a number.
+ * @param {HTMLDivElement} calendarWrapper 
+ */
+function createDaySquares(days, lastDay, calendarWrapper) {
     for (let i = 0; i < days.length; i++) {
         const daySquare = document.createElement('div');
         daySquare.innerText = i + 1;
         daySquare.classList.add('day');
-        document.getElementById('calendarWrapper').append(daySquare);
+        setBorder(days, i, daySquare, lastDay);
+        calendarWrapper.append(daySquare);
+    }
+}
+
+/**
+ * Adds a closing border if needed.
+ * @param {number} lastDay Weekday of the last day of the month described as a number.
+ * @param {HTMLDivElement} calendarWrapper 
+ */
+function addLastBorder(lastDay, calendarWrapper) {
+    if (lastDay < 7) {
+        const lastSquare = document.createElement('div');
+        lastSquare.classList.add('border-left');
+        calendarWrapper.append(lastSquare);
     }
 }
 
 /**
  * Renders invisible squares to the screen to place the first day of the month in the right column.
- * @param {array} days 
+ * @param {array} days An array containg the dates of all days in the month.
  */
-function renderBlanks(days) {
+function renderBlanks(days, calendarWrapper) {
     for (let i = 0; i < 7; i ++) {
         if (days[0].getDay() === i + 1) {
             for (let ii = 0; ii < i; ii++) {
                 const blankDay = document.createElement('div');
                 blankDay.classList.add('blank');
-                document.getElementById('calendarWrapper').append(blankDay);
+                blankDay.classList.add('border-bottom');
+                calendarWrapper.append(blankDay);
         }
         }
+    }
+}
+
+/**
+ * Adds borders to calendar days dynamically
+ * @param {array} days An array containg the dates of all days in the month.
+ * @param {number} i The iteration of the square construction loop.
+ * @param {HTMLDivElements} daySquare The calendar square currently under construction.
+ * @param {number} lastDay Weekday of the last day of the month described as a number.
+ */
+function setBorder(days, i, daySquare, lastDay) {
+    if (i >= 0 && days[i].getDay() != 1) {
+        daySquare.classList.add('border-left');
+    };
+    const lengthMinusLastRow = days.length - lastDay;
+    if (i < lengthMinusLastRow) {
+        daySquare.classList.add('border-bottom');
     }
 }
