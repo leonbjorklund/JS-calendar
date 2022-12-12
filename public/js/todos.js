@@ -95,7 +95,7 @@ function showItem() {
   <div class="event-text">${taskList[index].startTime}</div>
   <div class="event-text">${taskList[index].endTime}</div>
  
-  <button id="delete-task" onClick="removeTodo(${index})">x</button>
+  <button data-cy="delete-todo-button” id="delete-task" onclick="removeTodo(${index})">x</button>
 
   </div>
   `;
@@ -105,15 +105,16 @@ function showItem() {
 
 // remove item
 function removeTodo(index) {
+  console.log("hej");
   let localItems = JSON.parse(localStorage.getItem("localItem"));
   taskList.splice(index, 1);
   localStorage.setItem("localItem", JSON.stringify(taskList));
   showItem();
 }
 
-// if we want to keep "remove-all tasks button"
+// if we want to have a  "remove-all tasks button"
 
-// function clearTask() {
+// function clearAllTask() {
 //   localStorage.clear();
 //   showItem();
 // }
