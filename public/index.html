@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Calendar</title>
     <link
       href="//db.onlinewebfonts.com/c/501e03d4c0303f394033bcaf435f4b3e?family=Suisse+Int'l+Medium"
@@ -20,29 +20,25 @@
   </head>
   <body>
     <header>Calendar</header>
-    <aside>
+    <aside id="side-bar">
       <div id="timeDayDate">14:57 Wednesday December 7th</div>
       <div id="todo">To do-list</div>
-      
-      <button id="new-event-button">+ New Event</button>
-    
+
+      <button id="new-event-button">+ New Task</button>
       <div id="new-event-canvas">
-        <form id="event-form">
-            <input type="text" name="input-event-title" id="input-event-title" placeholder="Title" value="">
-            <input type="date" name="input-event-date" id="input-event-date">
-            <div id="time-flex">
-              <input type="time" name="input-event-start-time" id="input-event-start-time">
-              <span>to</span>
-              <input type="time" name="input-event-end-time" id="input-event-end-time">
-            </div>
-          <button id="create-event-button" data-cy="todo-list">Create Event</button>
+        <button id="cancel-event-button">X</button>
+        <form onsubmit="return false;" id="input-form">
+          <input type="text" name="title-input" id="title-input" placeholder="Title" autocomplete="off" value=""/>
+          <input type="date" name="date-input" id="date-input" autocomplete="off"/>
+          <input type="time" name="start-time-input" id="start-time-input" autocomplete="off"/>
+          <input type="time" name="end-time-input" id="end-time-input" autocomplete="off"/>
+          <button id="add-task-button">Add Task</button>
         </form>
       </div>
-    
-      <div id="events-canvas">
-        
-        
-      </div>
+
+      <div id="tasks-canvas"></div>
+      <!-- <button class="clearTask" onclick="clearTask()">Clear all Task</button> -->
+
       <script src="js/todos.js"></script>
     </aside>
     <main>

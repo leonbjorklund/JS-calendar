@@ -1,78 +1,104 @@
-const newEventButton = document.getElementById("new-event-button");
-const newEventCanvas = document.getElementById("new-event-canvas");
-
-newEventButton.addEventListener('click', showNewEventCanvas);
-
-function showNewEventCanvas () {
-  if (newEventCanvas.style.display === "block") {
-    newEventCanvas.style.display = "none";
-  }
-  else {
-    newEventCanvas.style.display = "block";
-  }
-}
-
-const createEventButton = document.getElementById("create-event-button");
-const eventsCanvas = document.getElementById("events-canvas");
-const dateInput = document.getElementById("input-event-date");
-
-const startTime = document.getElementById("input-event-start-time");
-const endTime = document.getElementById("input-event-end-time");
-
-
-let events = [];
-
-const createToDo = (ev) => {
-  
-  showNewEventCanvas();
-  ev.preventDefault();
-
-  let event = {
-    title: document.getElementById("input-event-title").value,
-    date: document.getElementById("input-event-date").value,
-    startTime: document.getElementById("input-event-start-time").value,
-    endTime: document.getElementById("input-event-end-time").value,
-  }
-
-  events.push(event);
-  document.forms[0].reset();
-  localStorage.setItem('eventList', JSON.stringify(events));
-
-  const eventBlock = document.createElement("div");
-  eventBlock.setAttribute("class", "event-block");
-  eventsCanvas.appendChild(eventBlock);
-
-  const createEventTitle = document.createElement("p");
-  createEventTitle.setAttribute("class", "event-text");
-  const giveTitleText = document.createTextNode(event.title);
-  eventBlock.appendChild(createEventTitle);
-  createEventTitle.appendChild(giveTitleText);
-  eventBlock.appendChild(createEventTitle);
-
-  const createDate = document.createElement("p");
-  createDate.setAttribute("class", "event-text");
-  const giveDate = document.createTextNode(event.date);
-  eventBlock.appendChild(createDate);
-  createDate.appendChild(giveDate);
-
-  const createStartTime = document.createElement("p");
-  createStartTime.setAttribute("class", "event-time");
-  const giveStartTime = document.createTextNode(event.startTime + " to ");
-  eventBlock.appendChild(createStartTime);
-  createStartTime.appendChild(giveStartTime);
-
-  const createEndTime = document.createElement("p");
-  createEndTime.setAttribute("class", "event-time");
-  const giveEndTime = document.createTextNode(event.endTime);
-  eventBlock.appendChild(createEndTime);
-  createEndTime.appendChild(giveEndTime);
-  
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-  createEventButton.addEventListener('click', createToDo);
+  window.addEventListener('load', showItem);
+  newEventButton.addEventListener('click', showNewEventCanvas);
+  addTaskButton.addEventListener("click", createTodo);
+  cancelEventButton.addEventListener('click', showNewEventCanvas);
+  formInput.addEventListener('input', () => (addTaskButton.innerHTML = "Create Event"));
 });
 
-  
+const newEventButton = document.getElementById("new-event-button");
+const newEventCanvas = document.getElementById("new-event-canvas");
+const cancelEventButton = document.getElementById("cancel-event-button");
 
+function showNewEventCanvas() {
+    if (newEventCanvas.style.display === "block") {
+      newEventCanvas.style.display = "none";
+    } else {
+      newEventCanvas.style.display = "block";
+    }
+    addTaskButton.innerHTML = "Create Task";
+  }
+
+const formInput = document.getElementById("input-form");
+const titleInput = document.getElementById("title-input");
+const dateInput = document.getElementById("date-input");
+const startTimeInput = document.getElementById("start-time-input");
+const endTimeInput = document.getElementById("end-time-input");
+
+const addTaskButton = document.getElementById("add-task-button");
+
+function createTodo() {
+
+  let task = {
+    title: titleInput.value,
+    date: dateInput.value,
+    startTime: startTimeInput.value,
+    endTime: endTimeInput.value,
+  }
+
+  showNewEventCanvas();
+
+  const hasValue = !Object.values(task).every((x) => x === null || x === "");
+
+  if (hasValue) {
+    let localItems = JSON.parse(localStorage.getItem("localItem"));
+
+    if (localItems === null) {
+      taskList = [];
+    } else {
+      taskList = localItems;
+    }
+    taskList.push(task);
+    localStorage.setItem("localItem", JSON.stringify(taskList));
+  } else {
+    newEventCanvas.style.display = "block";
+    addTaskButton.innerHTML = "add atleast one value";
+  }
+  titleInput.value = "";
+  dateInput.value = "";
+  startTimeInput.value = "";
+  endTimeInput.value = "";
+
+  showItem();
+}
+
+function showItem() {
+
+  let localItems = JSON.parse(localStorage.getItem("localItem"));
+  if (localItems === null) {
+    taskList = [];
+  } else {
+    taskList = localItems;
+  }
+
+  let html = "";
+  let itemShow = document.getElementById("tasks-canvas");
+  taskList.forEach((element, index) => {
+    html += `
+  <div class="task-block">
+  
+  <div class="event-text">${taskList[index].title}</div>
+  <div class="event-text">${taskList[index].date}</div>
+  <div class="event-text">${taskList[index].startTime}</div>
+  <div class="event-text">${taskList[index].endTime}</div>
+ 
+  <button id="delete-task" onClick="removeTodo(${index})">x</button>
+
+  </div>
+  `;
+  });
+  itemShow.innerHTML = html;
+}
+
+function removeTodo(index) {
+  let localItems = JSON.parse(localStorage.getItem("localItem"));
+  taskList.splice(index, 1);
+  localStorage.setItem("localItem", JSON.stringify(taskList));
+  showItem();
+}
+
+// function clearTask() {
+//   localStorage.clear();
+//   showItem();
+// }
 

@@ -23,17 +23,3 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-
-// Cypress.Commands.add('createTodo', function (todo) {
-
-//   let cmd = Cypress.log({
-//     name: 'create todo',
-//     message: todo,
-//     consoleProps () {
-//       return {
-//         'Inserted Todo': todo,
-//       }
-//     },
-//   })})
-
-Cypress.Commands.add('createTodo', (a, b) => { });
