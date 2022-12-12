@@ -24,6 +24,14 @@ aside {
 #timeDayDate {
   font-size: 1.5rem;
   background-color: #fffba4;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeDaydateLowerWrapper {
+  background-color: red;
+  display: flex;
+  justify-content: space-between;
 }
 
 #todo {
