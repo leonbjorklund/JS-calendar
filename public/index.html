@@ -20,10 +20,10 @@
     </aside>
     <main>
       <div class="flex-row" id="calendar-head">
-        <h1 id="open-month">December</h1>
-        <h1 id="open-year">2022</h1>
+        <h1 id="open-month"></h1>
+        <h1 id="open-year"></h1>
       </div>
-      <div id="calendarWrapper">
+      <div class="grid" id="daysRow">
         <div class="dayHeaders" id="monday">Mon</div>
         <div class="dayHeaders" id="tuesday">Tue</div>
         <div class="dayHeaders" id="wednesday">Wed</div>
@@ -31,46 +31,12 @@
         <div class="dayHeaders" id="friday">Fri</div>
         <div class="dayHeaders" id="saturday">Sat</div>
         <div class="dayHeaders" id="sunday">Sun</div>
-
-        <div class="day dayRowOne mon" id="square-1">01</div>
-        <div class="day dayRowOne tue" id="square-2">02</div>
-        <div class="day dayRowOne wed" id="square-3">03</div>
-        <div class="day dayRowOne thu" id="square-4">04</div>
-        <div class="day dayRowOne fri" id="square-5">05</div>
-        <div class="day dayRowOne sat" id="square-6">06</div>
-        <div class="day dayRowOne sun" id="square-7">07</div>
-
-        <div class="day dayRowTwo mon" id="square-8">08</div>
-        <div class="day dayRowTwo tue" id="square-9">09</div>
-        <div class="day dayRowTwo wed" id="square-10">10</div>
-        <div class="day dayRowTwo thu" id="square-11">11</div>
-        <div class="day dayRowTwo fri" id="square-12">12</div>
-        <div class="day dayRowTwo sat" id="square-13">13</div>
-        <div class="day dayRowTwo sun" id="square-14">14</div>
-
-        <div class="day dayRowThree mon" id="square-15">15</div>
-        <div class="day dayRowThree tue" id="square-16">16</div>
-        <div class="day dayRowThree wed" id="square-17">17</div>
-        <div class="day dayRowThree thu" id="square-18">18</div>
-        <div class="day dayRowThree fri" id="square-19">19</div>
-        <div class="day dayRowThree sat" id="square-20">20</div>
-        <div class="day dayRowThree sun" id="square-21">21</div>
-
-        <div class="day dayRowFour mon" id="square-22">22</div>
-        <div class="day dayRowFour tue" id="square-23">23</div>
-        <div class="day dayRowFour wed" id="square-24">24</div>
-        <div class="day dayRowFour thu" id="square-25">25</div>
-        <div class="day dayRowFour fri" id="square-26">26</div>
-        <div class="day dayRowFour sat" id="square-27">27</div>
-        <div class="day dayRowFour sun" id="square-28">28</div>
-
-        <div class="day dayRowFive mon" id="square-29">29</div>
-        <div class="day dayRowFive tue" id="square-30">30</div>
-        <div class="day dayRowFive wed" id="square-31">31</div>
-        <div class="day dayRowFive thu" id="square-32"></div>
-        <div class="day dayRowFive fri" id="square-33"></div>
-        <div class="day dayRowFive sat" id="square-34"></div>
-        <div class="day dayRowFive sun" id="square-35"></div>
+      </div>
+      <div class="grid" id="calendarWrapper" data-cy="calendar-body">
+      </div>
+      <div class="flex-row">
+        <button id="previous-month-button"><-</button>
+        <button id="next-month-button">-></button>
       </div>
     </main>
   </body>
