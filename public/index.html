@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="mobile.css" media="(max-width:600px)" />
     <script src="js/main.js"></script>
     <script src="js/calendar.js"></script>
+    <link rel="stylesheet" href="aside.css" />
+    
   </head>
   <body>
     <header>Calendar</header>
@@ -25,8 +27,7 @@
       <button id="new-event-button">+ New Event</button>
     
       <div id="new-event-canvas">
-          <div id="new-event-flexbox">
-        <form>
+        <form id="event-form">
             <input type="text" name="input-event-title" id="input-event-title" placeholder="Title" value="">
             <input type="date" name="input-event-date" id="input-event-date">
             <div id="time-flex">
@@ -36,14 +37,13 @@
             </div>
           <button id="create-event-button" data-cy="todo-list">Create Event</button>
         </form>
-        </div>
       </div>
     
       <div id="events-canvas">
         
         
       </div>
-      <script src="todos.js"></script>
+      <script src="js/todos.js"></script>
     </aside>
     <main>
     <main>
