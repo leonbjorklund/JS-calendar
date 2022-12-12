@@ -130,27 +130,34 @@ function addLastBorder(lastDay, calendarWrapper) {
     }
 }
 
+/**
+ * Adds listeners to the buttons which change to previous and next months.
+ * @param {number} month 
+ * @param {number} year 
+ */
 function addMonthChangeListeners(month, year) {
     document.getElementById('previous-month-button').addEventListener('click', () => {
-        clearDays();
-        month--;
-        if (month < 0) {
-            year--;
-            month = 11;
-        }
-        renderCalendar(month, year);
+        changeMonth(month, year, -1);
     })
     document.getElementById('next-month-button').addEventListener('click', () => {
-        clearDays();
-        month++;
-        if (month > 11) {
-            year++;
-            month = 0;
-        }
-        renderCalendar(month, year);
+        changeMonth(month, year, 1)
     })
 }
 
-function clearDays() {
+function changeMonth(month, year, increment) {
+    console.log(month, year);
     document.getElementById('calendarWrapper').innerHTML = '';
-};
+    console.log(month + increment)
+    month = month + increment;
+    if (month < 0) {
+        year = year + increment;
+        month = 11;
+        renderCalendar(month, year);   
+    } else if (month > 11) {
+        year = year + increment;
+        month = 0;
+        renderCalendar(month, year);
+    } else {
+        renderCalendar(month, year);
+    };
+}
