@@ -1,5 +1,5 @@
 function createTimeDateMonthMsg() {
-  const date = new Date().toLocaleDateString("en-UK", {
+  const date = new Date().toLocaleDateString("en-SE", {
     day: "numeric",
     weekday: "long",
     month: "long",
