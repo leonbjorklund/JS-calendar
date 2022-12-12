@@ -10,6 +10,8 @@ const newEventButton = document.getElementById("new-event-button");
 const newEventCanvas = document.getElementById("new-event-canvas");
 const cancelEventButton = document.getElementById("cancel-event-button");
 
+// Toggle show and hide on new-event-creator
+
 function showNewEventCanvas() {
     if (newEventCanvas.style.display === "block") {
       newEventCanvas.style.display = "none";
@@ -29,6 +31,7 @@ const addTaskButton = document.getElementById("add-task-button");
 
 function createTodo() {
 
+  // creating task-object
   let task = {
     title: titleInput.value,
     date: dateInput.value,
@@ -36,24 +39,31 @@ function createTodo() {
     endTime: endTimeInput.value,
   }
 
+  // close new-event canvas when new task is created
   showNewEventCanvas();
 
+  // checking if there exist user-input
   const hasValue = !Object.values(task).every((x) => x === null || x === "");
 
+  // if user-input exists, give to local-storage item "localItem"
   if (hasValue) {
     let localItems = JSON.parse(localStorage.getItem("localItem"));
 
+  // if localItems empty, set array to zero, otherwise set array taskList = localStorage item.
     if (localItems === null) {
       taskList = [];
     } else {
       taskList = localItems;
     }
+  
+  // push task-object to taskList array and set localStorage-item
     taskList.push(task);
     localStorage.setItem("localItem", JSON.stringify(taskList));
   } else {
     newEventCanvas.style.display = "block";
     addTaskButton.innerHTML = "add atleast one value";
   }
+  // resetting input-fields
   titleInput.value = "";
   dateInput.value = "";
   startTimeInput.value = "";
@@ -64,6 +74,7 @@ function createTodo() {
 
 function showItem() {
 
+  // same as above
   let localItems = JSON.parse(localStorage.getItem("localItem"));
   if (localItems === null) {
     taskList = [];
@@ -73,6 +84,8 @@ function showItem() {
 
   let html = "";
   let itemShow = document.getElementById("tasks-canvas");
+
+  // creating HTML-elements and placing input-values
   taskList.forEach((element, index) => {
     html += `
   <div class="task-block">
@@ -90,12 +103,15 @@ function showItem() {
   itemShow.innerHTML = html;
 }
 
+// remove item
 function removeTodo(index) {
   let localItems = JSON.parse(localStorage.getItem("localItem"));
   taskList.splice(index, 1);
   localStorage.setItem("localItem", JSON.stringify(taskList));
   showItem();
 }
+
+// if we want to keep "remove-all tasks button"
 
 // function clearTask() {
 //   localStorage.clear();
