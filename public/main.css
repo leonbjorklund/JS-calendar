@@ -19,7 +19,6 @@ header {
 aside {
   grid-row: 2;
   grid-column: 1 / 1;
-  margin: 0 2rem;
 }
 
 #timeDayDate {
