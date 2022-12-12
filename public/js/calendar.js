@@ -70,12 +70,24 @@ function createDaySquares(days, lastDay, calendarWrapper) {
 }
 
 /**
+ * Dats day number changing Sunday from 0 to 7
+ * @param {Date} day 
+ */
+function getCorrectDay(day) {
+    let dayNum = day.getDay();
+    if (dayNum === 0) {
+        dayNum = 7;
+    }
+    return dayNum;
+}
+
+/**
  * Renders invisible squares to the screen to place the first day of the month in the right column.
  * @param {array} days An array containg the dates of all days in the month.
  */
 function renderBlanks(days, calendarWrapper) {
     for (let i = 0; i < 7; i ++) {
-        if (days[0].getDay() === i + 1) {
+        if (getCorrectDay(days[0]) === i + 1) {
             for (let ii = 0; ii < i; ii++) {
                 const blankDay = document.createElement('div');
                 blankDay.classList.add('day');
