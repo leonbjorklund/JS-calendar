@@ -1,6 +1,10 @@
 /** Coordinates functions responsible for the calendar's functionality. */
 function runCalendar(month, year) {
     addMonthChangeListeners(month, year);
+    renderCalendar(month, year);
+}
+
+function renderCalendar(month, year) {
     const monthName = getMonthName(month);
     getDays(month, year);
     renderHead(monthName, year);
@@ -43,7 +47,7 @@ function getDays(month, year) {
  */
 function renderDays(days) {
     const calendarWrapper = document.getElementById('calendarWrapper');
-    const lastDay = days[days.length - 1].getDay();
+    const lastDay = getFixedDay(days[days.length - 1]);
     renderBlanks(days, calendarWrapper);
     createDaySquares(days, lastDay, calendarWrapper);
     addLastBorder(lastDay, calendarWrapper);
@@ -69,7 +73,7 @@ function createDaySquares(days, lastDay, calendarWrapper) {
  * Dats day number changing Sunday from 0 to 7
  * @param {Date} day 
  */
-function getCorrectDay(day) {
+function getFixedDay(day) {
     let dayNum = day.getDay();
     if (dayNum === 0) {
         dayNum = 7;
@@ -83,7 +87,7 @@ function getCorrectDay(day) {
  */
 function renderBlanks(days, calendarWrapper) {
     for (let i = 0; i < 7; i ++) {
-        if (getCorrectDay(days[0]) === i + 1) {
+        if (getFixedDay(days[0]) === i + 1) {
             for (let ii = 0; ii < i; ii++) {
                 const blankDay = document.createElement('div');
                 blankDay.classList.add('day');
@@ -107,7 +111,6 @@ function setBorder(days, i, daySquare, lastDay) {
         daySquare.classList.add('border-left');
     };
     const lengthMinusLastRow = days.length - lastDay;
-    console.log(lengthMinusLastRow, days.length);
     if (i < lengthMinusLastRow) {
         daySquare.classList.add('border-bottom');
     }
@@ -119,7 +122,7 @@ function setBorder(days, i, daySquare, lastDay) {
  * @param {HTMLDivElement} calendarWrapper 
  */
 function addLastBorder(lastDay, calendarWrapper) {
-    if (lastDay != 0) {
+    if (lastDay != 7) {
         const lastSquare = document.createElement('div');
         lastSquare.classList.add('day');
         lastSquare.classList.add('border-left');
@@ -127,34 +130,44 @@ function addLastBorder(lastDay, calendarWrapper) {
     }
 }
 
-/**
- * Adds listeners to the buttons which change to previous and next months.
- * @param {number} month 
- * @param {number} year 
- */
+
 function addMonthChangeListeners(month, year) {
-    document.getElementById('previous-month-button').addEventListener('click', function next() {
-        changeMonth(month, year, -1);
+    document.getElementById('previous-month-button').addEventListener('click', () => {
+        monthUp(month, year);
     })
-    document.getElementById('next-month-button').addEventListener('click', function previous() {
-        changeMonth(month, year, 1)
+    addEventListener('keypress', (e) => {
+        if (e.key('ArrowRight')) {
+            monthUp(month, year);
+        }
+    })
+    document.getElementById('next-month-button').addEventListener('click', () => {
+        monthDown(month, year);
     })
 }
 
-function changeMonth(month, year, increment) {
-    document.getElementById('calendarWrapper').innerHTML = '';
-    document.getElementById('previous-month-button').removeEventListener('click', next());
-    document.getElementById('next-month-button').removeEventListener('click', previous());
-    month = month + increment;
+/** Changes view to the next month */
+function monthUp(month, year) {
+    clearDays();
+    month--;
     if (month < 0) {
-        year = year + increment;
+        year--;
         month = 11;
-        runCalendar(month, year);   
-    } else if (month > 11) {
-        year += increment;
-        month = 0;
-        runCalendar(month, year);
-    } else {
-        runCalendar(month, year);
-    };
+    }
+    renderCalendar(month, year);
 }
+
+/** Changes view to the previous month */
+function monthDown(month, year) {
+    clearDays();
+    month++;
+    if (month > 11) {
+        year++;
+        month = 0;
+    }
+    renderCalendar(month, year);
+}
+
+/** Cleard current days of the month from page. */
+function clearDays() {
+    document.getElementById('calendarWrapper').innerHTML = '';
+};
