@@ -6,14 +6,11 @@
     width: 100%;
 }
 
-
-/* Main structure */
-
-#calendarWrapper {
+.grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 7;
-  }
+}
+
 
 /* Day block classes */
 
