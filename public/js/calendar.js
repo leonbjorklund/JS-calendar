@@ -43,7 +43,7 @@ function getDays(month, year) {
  */
 function renderDays(days) {
     const calendarWrapper = document.getElementById('calendarWrapper');
-    const lastDay = getFixedDay(days[days.length - 1]);
+    const lastDay = days[days.length - 1].getDay();
     renderBlanks(days, calendarWrapper);
     createDaySquares(days, lastDay, calendarWrapper);
     addLastBorder(lastDay, calendarWrapper);
@@ -69,7 +69,7 @@ function createDaySquares(days, lastDay, calendarWrapper) {
  * Dats day number changing Sunday from 0 to 7
  * @param {Date} day 
  */
-function getFixedDay(day) {
+function getCorrectDay(day) {
     let dayNum = day.getDay();
     if (dayNum === 0) {
         dayNum = 7;
@@ -83,7 +83,7 @@ function getFixedDay(day) {
  */
 function renderBlanks(days, calendarWrapper) {
     for (let i = 0; i < 7; i ++) {
-        if (getFixedDay(days[0]) === i + 1) {
+        if (getCorrectDay(days[0]) === i + 1) {
             for (let ii = 0; ii < i; ii++) {
                 const blankDay = document.createElement('div');
                 blankDay.classList.add('day');
@@ -107,6 +107,7 @@ function setBorder(days, i, daySquare, lastDay) {
         daySquare.classList.add('border-left');
     };
     const lengthMinusLastRow = days.length - lastDay;
+    console.log(lengthMinusLastRow, days.length);
     if (i < lengthMinusLastRow) {
         daySquare.classList.add('border-bottom');
     }
@@ -118,7 +119,7 @@ function setBorder(days, i, daySquare, lastDay) {
  * @param {HTMLDivElement} calendarWrapper 
  */
 function addLastBorder(lastDay, calendarWrapper) {
-    if (lastDay != 7) {
+    if (lastDay != 0) {
         const lastSquare = document.createElement('div');
         lastSquare.classList.add('day');
         lastSquare.classList.add('border-left');
