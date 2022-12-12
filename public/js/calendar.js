@@ -1,10 +1,6 @@
 /** Coordinates functions responsible for the calendar's functionality. */
 function runCalendar(month, year) {
     addMonthChangeListeners(month, year);
-    renderCalendar(month, year);
-}
-
-function renderCalendar(month, year) {
     const monthName = getMonthName(month);
     getDays(month, year);
     renderHead(monthName, year);
@@ -136,28 +132,28 @@ function addLastBorder(lastDay, calendarWrapper) {
  * @param {number} year 
  */
 function addMonthChangeListeners(month, year) {
-    document.getElementById('previous-month-button').addEventListener('click', () => {
+    document.getElementById('previous-month-button').addEventListener('click', function next() {
         changeMonth(month, year, -1);
     })
-    document.getElementById('next-month-button').addEventListener('click', () => {
+    document.getElementById('next-month-button').addEventListener('click', function previous() {
         changeMonth(month, year, 1)
     })
 }
 
 function changeMonth(month, year, increment) {
-    console.log(month, year);
     document.getElementById('calendarWrapper').innerHTML = '';
-    console.log(month + increment)
+    document.getElementById('previous-month-button').removeEventListener('click', next());
+    document.getElementById('next-month-button').removeEventListener('click', previous());
     month = month + increment;
     if (month < 0) {
         year = year + increment;
         month = 11;
-        renderCalendar(month, year);   
+        runCalendar(month, year);   
     } else if (month > 11) {
-        year = year + increment;
+        year += increment;
         month = 0;
-        renderCalendar(month, year);
+        runCalendar(month, year);
     } else {
-        renderCalendar(month, year);
+        runCalendar(month, year);
     };
 }
