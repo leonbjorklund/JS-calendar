@@ -18,12 +18,12 @@
       <div id="todo">To do-list</div>
       <button id="add-event-button">+</button>
     </aside>
-    <main data-cy="calendar-body">
+    <main>
       <div class="flex-row" id="calendar-head">
         <h1 id="open-month"></h1>
         <h1 id="open-year"></h1>
       </div>
-      <div id="calendarWrapper">
+      <div class="grid" id="daysRow">
         <div class="dayHeaders" id="monday">Mon</div>
         <div class="dayHeaders" id="tuesday">Tue</div>
         <div class="dayHeaders" id="wednesday">Wed</div>
@@ -31,6 +31,12 @@
         <div class="dayHeaders" id="friday">Fri</div>
         <div class="dayHeaders" id="saturday">Sat</div>
         <div class="dayHeaders" id="sunday">Sun</div>
+      </div>
+      <div class="grid" id="calendarWrapper" data-cy="calendar-body">
+      </div>
+      <div class="flex-row">
+        <button id="previous-month-button"><-</button>
+        <button id="next-month-button">-></button>
       </div>
     </main>
   </body>
