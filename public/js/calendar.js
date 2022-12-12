@@ -1,36 +1,112 @@
 /** Coordinates functions responsible for the calendar's functionality. */
-async function runCalendar() {
-    // get date
-    // send date to get month function
-    const month = await getMonth();
-    // pass month name and year to head rendering function
-    // pass day array to day rendering function
+function runCalendar(month, year) {
+    const monthName = getMonthName(month);
+    getDays(month, year);
+    renderHead(monthName, year);
 }
 
-/** Fetches data on month's days from API, parses json, returns object. */
-async function getMonth() {
-    const month = await fetch('http://sholiday.faboul.se/dagar/v2.1/2022/12')
-    .then((response) => response.json())
-    .then((data) => console.log(data));
-    return month;
+/** Gets the month's name from an array. */
+function getMonthName(month) {
+    const monthsList = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return monthsList[month];
 }
 
 /**
- * Takes month and year strings from month object, renders to calendar-head.
- * @param {string} month 
- * @param {string} year 
+ * Renders arguments to calendar head.
+ * @param {string} monthName 
+ * @param {number} year 
  */
-function renderCalHead(month, year) {
-    // takes month and year and assigns to header text
+function renderHead(monthName, year) {
+    document.getElementById('open-month').innerText = monthName;
+    document.getElementById('open-year').innerText = year;
 }
 
-function renderDays() {
-    // takes day array
-    // work out starting point by week day
-    // loop and break at matching weekday
-    // get square number
-    // loop following days and increase square number by one each iteration
+/**
+ * Gets days in month send via arguments. Passes onwards to functions the render days to the screen.
+ * @param {number} month 
+ * @param {number} year 
+ */
+function getDays(month, year) {
+    let date = new Date(year, month, 1);
+    const days = [];
+    while (date.getMonth() === month) {
+        days.push(new Date(date));
+        date.setDate(date.getDate() + 1);
+  }
+  renderDays(days);
+}
 
-    // THOUGHTS
-    // This means that all squares must be on the DOM but invisible until activated by script
+/**
+ * Takes array of dates in month as parameter. Renders to the screen individually in correct columns.
+ * @param {array} days An array containg the dates of all days in the month.
+ */
+function renderDays(days) {
+    const calendarWrapper = document.getElementById('calendarWrapper');
+    const lastDay = days[days.length - 1].getDay();
+    renderBlanks(days, calendarWrapper);
+    createDaySquares(days, lastDay, calendarWrapper);
+    addLastBorder(lastDay, calendarWrapper);
+}
+
+/**
+ * Creates a square on the calendar for each day of the months width dynamic borders.
+ * @param {array} days An array containg the dates of all days in the month.
+ * @param {number} lastDay Weekday of the last day of the month described as a number.
+ * @param {HTMLDivElement} calendarWrapper 
+ */
+function createDaySquares(days, lastDay, calendarWrapper) {
+    for (let i = 0; i < days.length; i++) {
+        const daySquare = document.createElement('div');
+        daySquare.innerText = i + 1;
+        daySquare.classList.add('day');
+        setBorder(days, i, daySquare, lastDay);
+        calendarWrapper.append(daySquare);
+    }
+}
+
+/**
+ * Adds a closing border if needed.
+ * @param {number} lastDay Weekday of the last day of the month described as a number.
+ * @param {HTMLDivElement} calendarWrapper 
+ */
+function addLastBorder(lastDay, calendarWrapper) {
+    if (lastDay < 7) {
+        const lastSquare = document.createElement('div');
+        lastSquare.classList.add('border-left');
+        calendarWrapper.append(lastSquare);
+    }
+}
+
+/**
+ * Renders invisible squares to the screen to place the first day of the month in the right column.
+ * @param {array} days An array containg the dates of all days in the month.
+ */
+function renderBlanks(days, calendarWrapper) {
+    for (let i = 0; i < 7; i ++) {
+        if (days[0].getDay() === i + 1) {
+            for (let ii = 0; ii < i; ii++) {
+                const blankDay = document.createElement('div');
+                blankDay.classList.add('blank');
+                blankDay.classList.add('border-bottom');
+                calendarWrapper.append(blankDay);
+        }
+        }
+    }
+}
+
+/**
+ * Adds borders to calendar days dynamically
+ * @param {array} days An array containg the dates of all days in the month.
+ * @param {number} i The iteration of the square construction loop.
+ * @param {HTMLDivElements} daySquare The calendar square currently under construction.
+ * @param {number} lastDay Weekday of the last day of the month described as a number.
+ */
+function setBorder(days, i, daySquare, lastDay) {
+    if (i >= 0 && days[i].getDay() != 1) {
+        daySquare.classList.add('border-left');
+    };
+    const lengthMinusLastRow = days.length - lastDay;
+    if (i < lengthMinusLastRow) {
+        daySquare.classList.add('border-bottom');
+    }
 }
