@@ -1,0 +1,13 @@
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+aside {
+  margin: 0;
+}
+
+.day {
+  min-height: auto;
+}

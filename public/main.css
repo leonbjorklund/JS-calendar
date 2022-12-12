@@ -1,7 +1,7 @@
 body {
-  margin: 0;
+  margin: 1rem;
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 25% 75%;
   grid-template-rows: 20% 80%;
   height: 100vh;
   font-family: "Suisse Int'l Medium", "Helvetica", sans-serif;
@@ -17,16 +17,13 @@ header {
 }
 
 aside {
-  background-color: aquamarine;
   grid-row: 2;
   grid-column: 1 / 1;
-  margin: 0 2rem;
 }
 
 #timeDayDate {
   font-size: 1.5rem;
-  background-color: blueviolet;
-  text-align: right;
+  background-color: #fffba4;
 }
 
 #todo {
@@ -37,7 +34,7 @@ aside {
 main {
   grid-row: 2;
   grid-column: 2 / 2;
-  margin:  0 2rem;
+  margin: 0 2rem;
 }
 
 .dayHeaders {
