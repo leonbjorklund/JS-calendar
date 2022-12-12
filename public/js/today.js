@@ -11,7 +11,10 @@ function createTimeDateMonthMsg() {
     second: "numeric",
   });
 
+  const today = new Date();
+  const year = today.getFullYear();
+
   document.getElementById(
     "timeDayDate"
-  ).textContent = `The time is: ${time} and the date is ${date}`;
+  ).textContent = `The time is: ${time} and the date is ${date} ${year}`;
 }
