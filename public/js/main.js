@@ -6,6 +6,11 @@ addEventListener("DOMContentLoaded", main);
 function main() {
   const date = new Date();
   runCalendar(date.getMonth(), date.getFullYear());
+
+  /** Creates welcome message and refreshes it every second.
+   *  createTimeDateMonthMsg(); is run alone first so it's not
+   *  a one second delay to load in the message.
+   */
   createTimeDateMonthMsg();
   setInterval(createTimeDateMonthMsg, 1000);
 }

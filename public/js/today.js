@@ -1,3 +1,8 @@
+/**
+ * Function creates and outputs time, date, day, month and year using the new Date()-function
+ * toLocaleDatestring and ToLocaleTimeString makes it possible to use options for what kind of
+ * output you want, and in what language/time zone.
+ */
 function createTimeDateMonthMsg() {
   const date = new Date().toLocaleDateString("en-SE", {
     day: "numeric",
