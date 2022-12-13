@@ -142,6 +142,7 @@ function createDaySquares(calendarWrapper) {
         const daySquare = document.createElement('div');
         daySquare.innerText = i + 1;
         daySquare.classList.add('day');
+        daySquare.id = i + 1;
         setBorder(i, daySquare);
         calendarWrapper.append(daySquare);
     }
