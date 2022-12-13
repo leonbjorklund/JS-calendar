@@ -11,6 +11,7 @@ function createTimeDateMonthMsg() {
   const time = new Date().toLocaleTimeString("sv-SE", {
     hour: "numeric",
     minute: "numeric",
+    second: "numeric",
   });
 
   const today = new Date();
@@ -23,4 +24,5 @@ function createTimeDateMonthMsg() {
   ).textContent = `Today ${englishDayName}`;
 
   document.getElementById("displayTodaysDateMonth").textContent = ` ${date}`;
+  document.getElementById("displayCurrentYear").textContent = year;
 }
