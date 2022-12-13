@@ -8,11 +8,8 @@ async function getHols() {
     // Will need to add unique IDs to squares on creation on calendar.js
 }
 
-// URL: http://sholiday.faboul.se/dagar/v2.1/2015/02
-// const hollibobs = await fetch('http://sholiday.faboul.se/dagar/v2.1/$`year`/$`month`')
-
 async function getAllDays() {
-    const allDays = await fetch(`http://sholiday.faboul.se/dagar/v2.1/${openMonth.year}/${openMonth.monthNr}`)
+    const allDays = await fetch(`http://sholiday.faboul.se/dagar/v2.1/${openMonth.year}/${openMonth.monthNr + 1}`)
         .then((response) => response.json())
         .then((data) => console.log(data));
 }
