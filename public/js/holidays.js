@@ -37,10 +37,10 @@ function getHolArray(allDays) {
  */
 function renderHollibobs(hollibobs) {
     for (const day of hollibobs) {
-        const splitDate = day.datum.split('-');
-        const holidate = splitDate[2];
-        const holidiv = document.createElement('div');
-        holidiv.innerText = day.helgdag;
-        document.getElementById(holidate).appendChild(holidiv);
+    const splitDate = day.datum.split('-');
+    const holidate = parseInt(splitDate[2]);
+    const holidiv = document.createElement('div');
+    holidiv.innerText = day.helgdag;
+    document.getElementById(holidate).appendChild(holidiv);
     }
 }
