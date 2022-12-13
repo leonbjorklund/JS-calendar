@@ -45,6 +45,7 @@ function renderCalendar(month, year) {
     getMonthData();
     renderHead();
     renderDays();
+    getHols();
 }
 
 
