@@ -46,10 +46,16 @@ function runCalendar(month, year) {
 */
 async function renderMonth() {
     getMonthData();
+    clearDays();
     await getHols();
     renderHead();
     renderDays();
 }
+
+/** Clears current days of the month from page. */
+function clearDays() {
+    document.getElementById('calendarWrapper').innerHTML = '';
+};
 
 
 // FUNCTIONS POPULATING THE MONTH OBJECT WITH DATA
@@ -183,33 +189,30 @@ function addMonthChangeListeners() {
     document.getElementById('previous-month-button').addEventListener('click', () => {
         changeMonth(-1);
     });
-    addEventListener('keydown', keyMonthDown);
     document.getElementById('next-month-button').addEventListener('click', () => {
         changeMonth(1);
     });
-    addEventListener('keydown', keyMonthUp);
-}
-
-/** Checks keypress and calls month changing function. */
-function keyMonthDown(e) {
-    if (e.key === 'ArrowLeft') {
-        changeMonth(-1);
-    }
-}
-
-/** Checks keypress and calls month changing function. */
-function keyMonthUp(e) {
-    if (e.key === 'ArrowRight') {
-        changeMonth(1);
-    }
+    addEventListener('keydown', keyMonthChange);
 }
 
 /**
- * Changes month up or down according to the increment parameter
+ * Checks keypress and calls month changing function with appropriate increment.
+ * @param {KeyboardEvent} e
+ */
+function keyMonthChange(e) {
+    if (e.key === 'ArrowLeft') {
+        changeMonth(-1);
+    } else if (e.key === 'ArrowRight') {
+        changeMonth(1);
+    };
+}
+
+/**
+ * Changes month up or down according to the increment parameter.
  * @param {number} increment
  */
 function changeMonth(increment) {
-    clearDays();
+    // clearDays();
     openMonth.monthNr += increment;
     if (openMonth.monthNr < 0) {
         openMonth.year -= 1;
@@ -220,8 +223,3 @@ function changeMonth(increment) {
     }
     renderMonth();
 }
-
-/** Clears current days of the month from page. */
-function clearDays() {
-    document.getElementById('calendarWrapper').innerHTML = '';
-};
