@@ -34,15 +34,18 @@ function getHolArray(allDays) {
 
 /**
  * Renders holiday names to the relevent day on screen.
- * @param {Array.<Object>} hollibobs An array of holiday day objects. 
+ * Called by day createDaySquares in calendar.js.
+ * @param {number} i
+ * @param {HTMLDivElement} daySquare
  */
-function renderHollibobs() {
+function renderHoliday(i, daySquare) {
     for (const day of openMonth.holidays) {
     const splitDate = day.datum.split('-');
     const holidate = parseInt(splitDate[2]);
-    const holidiv = document.createElement('div');
-    holidiv.innerText = day.helgdag;
-    document.getElementById(holidate).appendChild(holidiv);
-    console.log(document.getElementById(holidate), openMonth.monthNr, openMonth.year, day.helgdag);
+    if (holidate === i + 1) {
+        const holidiv = document.createElement('div');
+        holidiv.innerText = day.helgdag;
+        daySquare.appendChild(holidiv);
+    }
     }
 }

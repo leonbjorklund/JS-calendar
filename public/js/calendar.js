@@ -32,6 +32,7 @@ const openMonth = {
     lastWeekday: 0,
 }
 
+/** Calls rendeer function for the first month and event listener functions. */
 function runCalendar(month, year) {
     renderMonth(month, year);
     addMonthChangeListeners();
@@ -42,14 +43,12 @@ function runCalendar(month, year) {
  * Adds month change listeners.
 */
 async function renderMonth(month, year) {
-    // removeMonthChangeListeners();
     openMonth.monthNr = month;
     openMonth.year = year;
     await getHols();
     getMonthData();
     renderHead();
     renderDays();
-    renderHollibobs();
 }
 
 
@@ -142,7 +141,7 @@ function createDaySquares(calendarWrapper) {
         const daySquare = document.createElement('div');
         daySquare.innerText = i + 1;
         daySquare.classList.add('day');
-        daySquare.id = i + 1;
+        renderHoliday(i, daySquare);
         setBorder(i, daySquare);
         calendarWrapper.append(daySquare);
     }
@@ -187,19 +186,14 @@ function addMonthChangeListeners() {
     addEventListener('keydown', keyMonthUp);
 }
 
-function removeMonthChangeListeners() {
-    document.getElementById('previous-month-button').removeEventListener('click', monthDown);
-    removeEventListener('keydown', keyMonthDown);
-    document.getElementById('next-month-button').removeEventListener('click', monthUp);
-    removeEventListener('keydown', keyMonthUp);
-};
-
+/** Checks keypress and calls month changing function. */
 function keyMonthDown(e) {
     if (e.key === 'ArrowLeft') {
         monthDown();
     }
 }
 
+/** Checks keypress and calls month changing function. */
 function keyMonthUp(e) {
     if (e.key === 'ArrowRight') {
         monthUp();
