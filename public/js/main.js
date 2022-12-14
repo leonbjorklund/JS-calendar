@@ -6,6 +6,7 @@ addEventListener("DOMContentLoaded", main);
 function main() {
   const date = new Date();
   runCalendar(date.getMonth(), date.getFullYear());
+  runTodo();
 
   /** Creates welcome message and refreshes it every second.
    *  createTimeDateMonthMsg(); is run alone first so it's not
