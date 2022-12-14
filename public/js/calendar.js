@@ -161,7 +161,11 @@ function createDaySquares(calendarWrapper) {
     renderHoliday(i, daySquare);
     setBorder(i, daySquare);
     calendarWrapper.append(daySquare);
+
+    // Adds eventlistener to all days that are generated
     daySquare.addEventListener("click", activeDay);
+    // Sets date-data for each day
+    daySquare.dataset.todaysDate = openMonth.days[i];
   }
 }
 
