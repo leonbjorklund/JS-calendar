@@ -34,7 +34,9 @@ const openMonth = {
 
 /** Calls rendeer function for the first month and event listener functions. */
 function runCalendar(month, year) {
-    renderMonth(month, year);
+    openMonth.monthNr = month;
+    openMonth.year = year;
+    renderMonth();
     addMonthChangeListeners();
 }
 
@@ -42,11 +44,9 @@ function runCalendar(month, year) {
  * Sets new open month and calls functions for getting data and adding functionality.
  * Adds month change listeners.
 */
-async function renderMonth(month, year) {
-    openMonth.monthNr = month;
-    openMonth.year = year;
-    await getHols();
+async function renderMonth() {
     getMonthData();
+    await getHols();
     renderHead();
     renderDays();
 }
@@ -180,48 +180,45 @@ function addLastBorder(calendarWrapper) {
 
 /** Adds listeners for changing month to previous and next */
 function addMonthChangeListeners() {
-    document.getElementById('previous-month-button').addEventListener('click', monthDown);
+    document.getElementById('previous-month-button').addEventListener('click', () => {
+        changeMonth(-1);
+    });
     addEventListener('keydown', keyMonthDown);
-    document.getElementById('next-month-button').addEventListener('click', monthUp);
+    document.getElementById('next-month-button').addEventListener('click', () => {
+        changeMonth(1);
+    });
     addEventListener('keydown', keyMonthUp);
 }
 
 /** Checks keypress and calls month changing function. */
 function keyMonthDown(e) {
     if (e.key === 'ArrowLeft') {
-        monthDown();
+        changeMonth(-1);
     }
 }
 
 /** Checks keypress and calls month changing function. */
 function keyMonthUp(e) {
     if (e.key === 'ArrowRight') {
-        monthUp();
+        changeMonth(1);
     }
 }
 
-/** Changes view to the previous month. */
-function monthDown() {
+/**
+ * Changes month up or down according to the increment parameter
+ * @param {number} increment
+ */
+function changeMonth(increment) {
     clearDays();
-    let month = openMonth.monthNr - 1;
-    let year = openMonth.year;
-    if (month < 0) {
-        year -= 1;
-        month = 11;
+    openMonth.monthNr += increment;
+    if (openMonth.monthNr < 0) {
+        openMonth.year -= 1;
+        openMonth.monthNr = 11;
+    } else if (openMonth.monthNr > 11) {
+        openMonth.year += 1;
+        openMonth.monthNr = 0;
     }
-    renderMonth(month, year);
-}
-
-/** Changes view to the next month. */
-function monthUp() {
-    clearDays();
-    let month = openMonth.monthNr + 1;
-    let year = openMonth.year;
-    if (month > 11) {
-        year += 1;
-        month = 0;
-    }
-    renderMonth(month, year);
+    renderMonth();
 }
 
 /** Clears current days of the month from page. */
