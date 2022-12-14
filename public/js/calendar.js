@@ -24,28 +24,32 @@ const openMonth = {
      * Weekday number of the first day of the month, 1-7.
      * @type {number}
      */
-    firstDay: 0,
+    firstWeekday: 0,
     /**
      * Weekday number of the last day of the month, 1-7.
      * @type {number}
      */
-    lastDay: 0,
+    lastWeekday: 0,
 }
 
-/** Calls functions to add button event listeners and render opening month. */
 function runCalendar(month, year) {
+    renderMonth(month, year);
     addMonthChangeListeners();
-    renderCalendar(month, year);
 }
 
-/** Sets new open month and calls functions for getting data and adding functionality. */
-function renderCalendar(month, year) {
+/** 
+ * Sets new open month and calls functions for getting data and adding functionality.
+ * Adds month change listeners.
+*/
+async function renderMonth(month, year) {
+    // removeMonthChangeListeners();
     openMonth.monthNr = month;
     openMonth.year = year;
+    await getHols();
     getMonthData();
     renderHead();
     renderDays();
-    getHols();
+    renderHollibobs();
 }
 
 
@@ -78,16 +82,16 @@ function getDays() {
 
 /* Gets the weekday number of the first day of the month. Used for border-drawing functions below */
 function getFirstDay() {
-        let firstDay = openMonth.days[0].getDay();
-        firstDay = makeSundaySevenAgain(firstDay);
-        openMonth.firstDay = firstDay;
+        let firstWeekday = openMonth.days[0].getDay();
+        firstWeekday = makeSundaySevenAgain(firstWeekday);
+        openMonth.firstWeekday = firstWeekday;
     };
 
 /* Gets the weekday number of the last day of the month. Used for border-drawing functions below */
 function getLastDay() {
-    let lastDay = openMonth.days[openMonth.days.length - 1].getDay();
-    lastDay = makeSundaySevenAgain(lastDay);
-    openMonth.lastDay = lastDay;
+    let lastWeekday = openMonth.days[openMonth.days.length - 1].getDay();
+    lastWeekday = makeSundaySevenAgain(lastWeekday);
+    openMonth.lastWeekday = lastWeekday;
 }
 
 /** Converts number for Sunday from 0 to 7 */
@@ -120,16 +124,12 @@ function renderDays() {
  * @param {HTMLDivElement} calendarWrapper
  */
 function renderBlanks(calendarWrapper) {
-    for (let i = 0; i < 7; i ++) {
-        if (openMonth.firstDay === i + 1) {
-            for (let ii = 0; ii < i; ii++) {
-                const blankDay = document.createElement('div');
-                blankDay.classList.add('day');
-                blankDay.classList.add('blank');
-                blankDay.classList.add('border-bottom');
-                calendarWrapper.append(blankDay);
-        }
-        }
+    for (let i = 0; i < openMonth.firstWeekday - 1; i++) {
+        const blankDay = document.createElement('div');
+        blankDay.classList.add('day');
+        blankDay.classList.add('blank');
+        blankDay.classList.add('border-bottom');
+        calendarWrapper.append(blankDay);
     }
 }
 
@@ -157,7 +157,7 @@ function setBorder(i, daySquare) {
     if (i >= 0 && openMonth.days[i].getDay() != 1) {
         daySquare.classList.add('border-left');
     };
-    const lengthMinusLastRow = openMonth.days.length - openMonth.lastDay;
+    const lengthMinusLastRow = openMonth.days.length - openMonth.lastWeekday;
     if (i < lengthMinusLastRow) {
         daySquare.classList.add('border-bottom');
     }
@@ -168,7 +168,7 @@ function setBorder(i, daySquare) {
  * @param {HTMLDivElement} calendarWrapper 
  */
 function addLastBorder(calendarWrapper) {
-    if (openMonth.lastDay != 7) {
+    if (openMonth.lastWeekday != 7) {
         const lastSquare = document.createElement('div');
         lastSquare.classList.add('day');
         lastSquare.classList.add('border-left');
@@ -182,17 +182,28 @@ function addLastBorder(calendarWrapper) {
 /** Adds listeners for changing month to previous and next */
 function addMonthChangeListeners() {
     document.getElementById('previous-month-button').addEventListener('click', monthDown);
-    addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-            monthDown();
-        }
-    })
+    addEventListener('keydown', keyMonthDown);
     document.getElementById('next-month-button').addEventListener('click', monthUp);
-    addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight') {
-            monthUp();
-        }
-    })
+    addEventListener('keydown', keyMonthUp);
+}
+
+function removeMonthChangeListeners() {
+    document.getElementById('previous-month-button').removeEventListener('click', monthDown);
+    removeEventListener('keydown', keyMonthDown);
+    document.getElementById('next-month-button').removeEventListener('click', monthUp);
+    removeEventListener('keydown', keyMonthUp);
+};
+
+function keyMonthDown(e) {
+    if (e.key === 'ArrowLeft') {
+        monthDown();
+    }
+}
+
+function keyMonthUp(e) {
+    if (e.key === 'ArrowRight') {
+        monthUp();
+    }
 }
 
 /** Changes view to the previous month. */
@@ -204,7 +215,7 @@ function monthDown() {
         year -= 1;
         month = 11;
     }
-    renderCalendar(month, year);
+    renderMonth(month, year);
 }
 
 /** Changes view to the next month. */
@@ -216,7 +227,7 @@ function monthUp() {
         year += 1;
         month = 0;
     }
-    renderCalendar(month, year);
+    renderMonth(month, year);
 }
 
 /** Clears current days of the month from page. */

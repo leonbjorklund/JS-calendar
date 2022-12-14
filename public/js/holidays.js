@@ -1,8 +1,7 @@
 /** Coordinates functions responsible for fetching data on national holidays and rendering it to the screen. */
 async function getHols() {
     const allDays = await getAllDays();
-    const hollibobs = getHolArray(allDays);
-    renderHollibobs(hollibobs);
+    getHolArray(allDays);
 }
 
 
@@ -11,8 +10,10 @@ async function getHols() {
  * @returns {Array.<Object>} All day objects in the month.
  */
 async function getAllDays() {
-    const month = await fetch(`http://sholiday.faboul.se/dagar/v2.1/${openMonth.year}/${openMonth.monthNr + 1}`)
-        .then((response) => response.json());
+    const month = await fetch(`https://sholiday.faboul.se/dagar/v2.1/${openMonth.year}/${openMonth.monthNr + 1}`)
+        .then((response) => response.json())
+        .catch(await fetch(`https://sholiday.faboul.se/dagar/v2.1/${openMonth.year}/${openMonth.monthNr + 1}`)
+        .then((response) => response.json()));
     return month.dagar;
 }
 
@@ -28,19 +29,20 @@ function getHolArray(allDays) {
             hollibobs.push(day);
         }
     }
-    return hollibobs;
+    openMonth.holidays = hollibobs;
 }
 
 /**
  * Renders holiday names to the relevent day on screen.
  * @param {Array.<Object>} hollibobs An array of holiday day objects. 
  */
-function renderHollibobs(hollibobs) {
-    for (const day of hollibobs) {
+function renderHollibobs() {
+    for (const day of openMonth.holidays) {
     const splitDate = day.datum.split('-');
     const holidate = parseInt(splitDate[2]);
     const holidiv = document.createElement('div');
     holidiv.innerText = day.helgdag;
     document.getElementById(holidate).appendChild(holidiv);
+    console.log(document.getElementById(holidate), openMonth.monthNr, openMonth.year, day.helgdag);
     }
 }
