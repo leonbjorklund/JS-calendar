@@ -24,28 +24,38 @@ const openMonth = {
      * Weekday number of the first day of the month, 1-7.
      * @type {number}
      */
-    firstDay: 0,
+    firstWeekday: 0,
     /**
      * Weekday number of the last day of the month, 1-7.
      * @type {number}
      */
-    lastDay: 0,
+    lastWeekday: 0,
 }
 
-/** Calls functions to add button event listeners and render opening month. */
+/** Calls rendeer function for the first month and event listener functions. */
 function runCalendar(month, year) {
-    addMonthChangeListeners();
-    renderCalendar(month, year);
-}
-
-/** Sets new open month and calls functions for getting data and adding functionality. */
-function renderCalendar(month, year) {
     openMonth.monthNr = month;
     openMonth.year = year;
+    renderMonth();
+    addMonthChangeListeners();
+}
+
+/** 
+ * Sets new open month and calls functions for getting data and adding functionality.
+ * Adds month change listeners.
+*/
+async function renderMonth() {
     getMonthData();
+    clearDays();
+    await getHols();
     renderHead();
     renderDays();
 }
+
+/** Clears current days of the month from page. */
+function clearDays() {
+    document.getElementById('calendarWrapper').innerHTML = '';
+};
 
 
 // FUNCTIONS POPULATING THE MONTH OBJECT WITH DATA
@@ -77,16 +87,16 @@ function getDays() {
 
 /* Gets the weekday number of the first day of the month. Used for border-drawing functions below */
 function getFirstDay() {
-        let firstDay = openMonth.days[0].getDay();
-        firstDay = makeSundaySevenAgain(firstDay);
-        openMonth.firstDay = firstDay;
+        let firstWeekday = openMonth.days[0].getDay();
+        firstWeekday = makeSundaySevenAgain(firstWeekday);
+        openMonth.firstWeekday = firstWeekday;
     };
 
 /* Gets the weekday number of the last day of the month. Used for border-drawing functions below */
 function getLastDay() {
-    let lastDay = openMonth.days[openMonth.days.length - 1].getDay();
-    lastDay = makeSundaySevenAgain(lastDay);
-    openMonth.lastDay = lastDay;
+    let lastWeekday = openMonth.days[openMonth.days.length - 1].getDay();
+    lastWeekday = makeSundaySevenAgain(lastWeekday);
+    openMonth.lastWeekday = lastWeekday;
 }
 
 /** Converts number for Sunday from 0 to 7 */
@@ -119,16 +129,12 @@ function renderDays() {
  * @param {HTMLDivElement} calendarWrapper
  */
 function renderBlanks(calendarWrapper) {
-    for (let i = 0; i < 7; i ++) {
-        if (openMonth.firstDay === i + 1) {
-            for (let ii = 0; ii < i; ii++) {
-                const blankDay = document.createElement('div');
-                blankDay.classList.add('day');
-                blankDay.classList.add('blank');
-                blankDay.classList.add('border-bottom');
-                calendarWrapper.append(blankDay);
-        }
-        }
+    for (let i = 0; i < openMonth.firstWeekday - 1; i++) {
+        const blankDay = document.createElement('div');
+        blankDay.classList.add('day');
+        blankDay.classList.add('blank');
+        blankDay.classList.add('border-bottom');
+        calendarWrapper.append(blankDay);
     }
 }
 
@@ -141,6 +147,7 @@ function createDaySquares(calendarWrapper) {
         const daySquare = document.createElement('div');
         daySquare.innerText = i + 1;
         daySquare.classList.add('day');
+        renderHoliday(i, daySquare);
         setBorder(i, daySquare);
         calendarWrapper.append(daySquare);
     }
@@ -155,7 +162,7 @@ function setBorder(i, daySquare) {
     if (i >= 0 && openMonth.days[i].getDay() != 1) {
         daySquare.classList.add('border-left');
     };
-    const lengthMinusLastRow = openMonth.days.length - openMonth.lastDay;
+    const lengthMinusLastRow = openMonth.days.length - openMonth.lastWeekday;
     if (i < lengthMinusLastRow) {
         daySquare.classList.add('border-bottom');
     }
@@ -166,7 +173,7 @@ function setBorder(i, daySquare) {
  * @param {HTMLDivElement} calendarWrapper 
  */
 function addLastBorder(calendarWrapper) {
-    if (openMonth.lastDay != 7) {
+    if (openMonth.lastWeekday != 7) {
         const lastSquare = document.createElement('div');
         lastSquare.classList.add('day');
         lastSquare.classList.add('border-left');
@@ -179,45 +186,40 @@ function addLastBorder(calendarWrapper) {
 
 /** Adds listeners for changing month to previous and next */
 function addMonthChangeListeners() {
-    document.getElementById('previous-month-button').addEventListener('click', monthDown);
-    addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-            monthDown();
-        }
-    })
-    document.getElementById('next-month-button').addEventListener('click', monthUp);
-    addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight') {
-            monthUp();
-        }
-    })
+    document.getElementById('previous-month-button').addEventListener('click', () => {
+        changeMonth(-1);
+    });
+    document.getElementById('next-month-button').addEventListener('click', () => {
+        changeMonth(1);
+    });
+    addEventListener('keydown', keyMonthChange);
 }
 
-/** Changes view to the previous month. */
-function monthDown() {
-    clearDays();
-    let month = openMonth.monthNr - 1;
-    let year = openMonth.year;
-    if (month < 0) {
-        year -= 1;
-        month = 11;
+/**
+ * Checks keypress and calls month changing function with appropriate increment.
+ * @param {KeyboardEvent} e
+ */
+function keyMonthChange(e) {
+    if (e.key === 'ArrowLeft') {
+        changeMonth(-1);
+    } else if (e.key === 'ArrowRight') {
+        changeMonth(1);
+    };
+}
+
+/**
+ * Changes month up or down according to the increment parameter.
+ * @param {number} increment
+ */
+function changeMonth(increment) {
+    // clearDays();
+    openMonth.monthNr += increment;
+    if (openMonth.monthNr < 0) {
+        openMonth.year -= 1;
+        openMonth.monthNr = 11;
+    } else if (openMonth.monthNr > 11) {
+        openMonth.year += 1;
+        openMonth.monthNr = 0;
     }
-    renderCalendar(month, year);
+    renderMonth();
 }
-
-/** Changes view to the next month. */
-function monthUp() {
-    clearDays();
-    let month = openMonth.monthNr + 1;
-    let year = openMonth.year;
-    if (month > 11) {
-        year += 1;
-        month = 0;
-    }
-    renderCalendar(month, year);
-}
-
-/** Clears current days of the month from page. */
-function clearDays() {
-    document.getElementById('calendarWrapper').innerHTML = '';
-};
