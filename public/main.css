@@ -95,3 +95,7 @@ main {
 #sunday {
   grid-column: 7/7;
 }
+
+.red {
+  background-color: red;
+}
