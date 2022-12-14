@@ -50,6 +50,7 @@ async function renderMonth() {
     await getHols();
     renderHead();
     renderDays();
+    getMonthTodos();
 }
 
 /** Clears current days of the month from page. */
