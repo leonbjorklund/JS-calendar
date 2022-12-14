@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calendar</title>
     <link
       href="//db.onlinewebfonts.com/c/501e03d4c0303f394033bcaf435f4b3e?family=Suisse+Int'l+Medium"
@@ -12,26 +12,61 @@
     />
     <link rel="stylesheet" href="main.css" />
     <link rel="stylesheet" href="css/calendar.css" />
-    <link rel="stylesheet" href="mobile.css" media="(max-width:600px)" />
-    <script src="js/main.js"></script>
-    <script src="js/calendar.js"></script>
     <link rel="stylesheet" href="aside.css" />
-    
+    <link rel="stylesheet" href="mobile.css" media="(max-width:600px)" />
+
+    <script src="js/main.js"></script>
+    <script src="js/today.js"></script>
+    <script src="js/calendar.js"></script>
   </head>
   <body>
     <header>Calendar</header>
     <aside id="side-bar">
-      <div id="timeDayDate">14:57 Wednesday December 7th</div>
+      <div id="timeDayDate" data-cy="welcome-segment">
+        <div class="timeDaydateHigherWrapper">
+          <div id="displayCurrentTime"></div>
+          <div id="displayCurrentYear"></div>
+        </div>
+
+        <div class="timeDaydateLowerWrapper">
+          <div id="displayTodaysDay"></div>
+          <div id="displayTodaysDateMonth">h</div>
+        </div>
+      </div>
       <div id="todo">To do-list</div>
 
       <button id="new-event-button">+ New Task</button>
       <div id="new-event-canvas">
         <button id="cancel-event-button">X</button>
         <form onsubmit="return false;" id="input-form">
-          <input type="text" name="title-input" id="title-input" data-cy="todo-task-input" placeholder="Title" autocomplete="off" value=""/>
-          <input type="date" name="date-input" id="date-input" data-cy="todo-date-input" autocomplete="off"/>
-          <input type="time" name="start-time-input" id="start-time-input" autocomplete="off"/>
-          <input type="time" name="end-time-input" id="end-time-input" autocomplete="off"/>
+          <input
+            type="text"
+            name="title-input"
+            id="title-input"
+            data-cy="todo-task-input"
+            placeholder="Title"
+            autocomplete="off"
+            value=""
+          />
+          <input
+            type="date"
+            name="date-input"
+            id="date-input"
+            data-cy="todo-date-input"
+            autocomplete="off"
+          />
+          <input
+            type="time"
+            name="start-time-input"
+            id="start-time-input"
+            autocomplete="off"
+          />
+          <input
+            type="time"
+            name="end-time-input"
+            id="end-time-input"
+            autocomplete="off"
+          />
           <button id="add-task-button">Add Task</button>
         </form>
       </div>
@@ -41,7 +76,7 @@
 
       <script src="js/todos.js"></script>
     </aside>
-    <main>
+
     <main>
       <div class="flex-row" id="calendar-head">
         <h1 id="open-month"></h1>
@@ -56,8 +91,7 @@
         <div class="dayHeaders" id="saturday">Sat</div>
         <div class="dayHeaders" id="sunday">Sun</div>
       </div>
-      <div class="grid" id="calendarWrapper" data-cy="calendar-body">
-      </div>
+      <div class="grid" id="calendarWrapper" data-cy="calendar-body"></div>
       <div class="flex-row">
         <button id="previous-month-button" data-cy="prev-month"><-</button>
         <button id="next-month-button" data-cy="next-month">-></button>
