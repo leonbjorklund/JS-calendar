@@ -16,9 +16,10 @@ function activeDay(event) {
   // Gets the date from localstorage
   const dateFromLS = JSON.parse(localStorage.getItem("localItem"));
 
-  // Filters and matches the clicked on date with the dates in localstorage
+  // Filters and matches the clicked on date with the dates in localstorage. Makes them both to string to compare
   const filterAndMatchDates = dateFromLS.filter(
-    (item) => new Date(item.date).setHours(0) === date.getTime()
+    (item) =>
+      new Date(item.date).toLocaleDateString() === date.toLocaleDateString()
   );
 
   console.log(filterAndMatchDates);
