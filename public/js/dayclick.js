@@ -12,22 +12,11 @@ function activeDay(event) {
   // Puts toggle on the targeted day
   target.classList.toggle("red");
 
-  // No value = undefined
-  let filterAndMatchDates;
-
-  if (!wasActive) {
-    // Gets the date from the day that is clicked on
+  if (wasActive) {
+    localStorage.removeItem("activeDay");
+  } else {
     const date = new Date(target.dataset.todaysDate);
-
-    // Gets the date from localstorage
-    const dateFromLS = JSON.parse(localStorage.getItem("localItem"));
-
-    // Filters and matches the clicked on date with the dates in localstorage. Makes them both to string to compare
-    filterAndMatchDates = dateFromLS.filter(
-      (item) =>
-        new Date(item.date).toLocaleDateString() === date.toLocaleDateString()
-    );
+    localStorage.setItem("activeDay", date.toLocaleDateString("sv-SE"));
   }
-
-  showItem(filterAndMatchDates);
+  showItem();
 }
