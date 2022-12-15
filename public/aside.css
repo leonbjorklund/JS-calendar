@@ -1,49 +1,90 @@
+#todo {
+  margin: 10px;
+}
+
+#timeDayDate {
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+
 #new-event-button {
   cursor:pointer;
   border: none;
   width: 100%;
-  background-color: aquamarine;
-  font-size: 1.2rem;
+  background-color: #fffba4;
+  font-size: 1.5rem;
+  padding: 5px;
 }
 
 #new-event-canvas {
   display: none;
-  background-color: gray;
+  background-color: #fffba4;
   width: 100%;
+}
+
+#box-shadow {
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
 }
 
 #input-form {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 8rem;
+  row-gap: 5px;
+  margin-top: 5px;
+}
+
+#input-form > input, #input-form > button {
+  padding: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 1.1rem;
+}
+
+#input-form > button {
+  margin-bottom: 5px;
 }
 
 #cancel-event-button {
   cursor: pointer;
-  width: 20%;
-  left: 80%;
   position: relative;
+  left: 90%;
+  padding: 5px
 }
 
 #add-task-button {
   cursor: pointer;
 }
 
-#tasks-canvas {
+ul {
   display: flex;
   flex-direction: column-reverse;
-  row-gap: 10px;
+  padding-right: 5px;
+  padding-left: 5px;
+  row-gap: 5px;
 }
 
-.task-block {
+.event-block {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
-  height: 100%;
-  background-color: gray;
+  row-gap: 10px;
+  border: solid 1px black;
+  font-size: 1.5rem;
   align-items: center;
-  margin-top: 10px;
+}
+
+#position-button {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+#position-button > button {
+  height: 100%;
+  font-size: 1.4rem;
 }
 
 #delete-task {
@@ -53,4 +94,6 @@
 .event-text {
   font-size: 1.2rem;
 }
+
+
 
