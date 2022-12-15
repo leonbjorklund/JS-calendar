@@ -2,11 +2,17 @@
 
 /** Gets todo list data from local storage */
 function getMonthTodos() {
+    clearIcons();
     const allLocalTodos = JSON.parse(localStorage.getItem('localItem'));
     if (allLocalTodos) {
         const openMonthTodos = filterMonthTodos(allLocalTodos);
         renderTodoIcons(openMonthTodos);
     }
+}
+
+function clearIcons() {
+    const todoIcons = document.querySelectorAll('.todo-icon');
+    todoIcons.forEach(todoIcon => todoIcon.remove());
 }
 
 /**

@@ -62,8 +62,8 @@ function createTodo() {
   dateInput.value = "";
   startTimeInput.value = "";
   endTimeInput.value = "";
-
   showItem();
+  getMonthTodos();
 }
 
 function showItem() {
@@ -102,6 +102,7 @@ function removeTodo(index) {
   taskList.splice(index, 1);
   saveTaskList(taskList);
   showItem();
+  getMonthTodos();
 }
 
 // returns the stored task list or a new task list if it doesn't exist
