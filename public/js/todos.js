@@ -150,7 +150,7 @@ function saveEdit(index) {
   showItem();
   toggleCreateEventCanvas();
   resetForm();
-  console.log("save-edit");
+
 }
 
 // returns the stored task list or a new task list if it doesn't exist
