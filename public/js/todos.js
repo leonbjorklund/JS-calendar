@@ -7,6 +7,12 @@ function runTodo() {
   
   window.addEventListener('load', showItem);
   newEventButton.addEventListener('click', toggleCreateEventCanvas);
+  // newEventButton.addEventListener('click', () => {
+  //   saveTaskButton.removeEventListener('click',  function () {
+  //     saveEdit(index);
+  //   });
+  //   saveTaskButton.addEventListener('click', createTodo);
+  // });
   saveTaskButton.addEventListener('click', createTodo);
   cancelEventButton.addEventListener('click', toggleCreateEventCanvas);
   formInput.addEventListener('input', () => (saveTaskButton.innerHTML = "Save Task"));
@@ -58,11 +64,9 @@ function createTodo() {
     saveTaskButton.innerHTML = "add atleast one value";
   }
   // resetting input-fields
-  titleInput.value = "";
-  dateInput.value = "";
-  startTimeInput.value = "";
-  endTimeInput.value = "";
+  resetForm();
 
+  //displaying task
   showItem();
 }
 
@@ -85,7 +89,7 @@ function showItem() {
     }
     // add a delete and an edit button for each task
     html += `<button data-cy="delete-todo-button" onclick="removeTodo(${index})">x</button>`
-    // html += `<button data-cy="edit-todo-button" onclick="editTodo(${index})">Edit</button>`
+    html += `<button data-cy="edit-todo-button" onclick="editTodo(${index})">Edit</button>`
     // close the list item, done with current task
     html += "</li>"
   ;
@@ -104,6 +108,51 @@ function removeTodo(index) {
   showItem();
 }
 
+function editTodo (index) {
+
+  toggleCreateEventCanvas();
+
+  const saveTaskButton = document.getElementById("save-task-button");
+  saveTaskButton.innerHTML = "Edit Task";
+  saveTaskButton.removeEventListener('click', createTodo);
+
+  const titleInput = document.getElementById("title-input");
+  const dateInput = document.getElementById("date-input");
+  const startTimeInput = document.getElementById("start-time-input");
+  const endTimeInput = document.getElementById("end-time-input");
+  let taskList = getTaskList();
+
+  titleInput.value = taskList[index].title;
+  dateInput.value = taskList[index].date;
+  startTimeInput.value = taskList[index].startTime;
+  endTimeInput.value = taskList[index].endTime;
+
+  saveTaskButton.onclick = function() {
+    saveEdit(index);
+    saveTaskButton.onclick = createTodo;
+  };
+}
+
+function saveEdit(index) {
+
+  const titleInput = document.getElementById("title-input");
+  const dateInput = document.getElementById("date-input");
+  const startTimeInput = document.getElementById("start-time-input");
+  const endTimeInput = document.getElementById("end-time-input");
+
+  let taskList = getTaskList();
+  taskList[index].title = titleInput.value;
+  taskList[index].date = dateInput.value;
+  taskList[index].startTime = startTimeInput.value;
+  taskList[index].endTime = endTimeInput.value;
+
+  saveTaskList(taskList);
+  showItem();
+  toggleCreateEventCanvas();
+  resetForm();
+  console.log("save-edit");
+}
+
 // returns the stored task list or a new task list if it doesn't exist
 function getTaskList() {
   let localItems = JSON.parse(localStorage.getItem("localItem"));
@@ -119,9 +168,23 @@ function saveTaskList(taskList) {
   localStorage.setItem("localItem", JSON.stringify(taskList));
 }
 
+function resetForm () {
+  const titleInput = document.getElementById("title-input");
+  const dateInput = document.getElementById("date-input");
+  const startTimeInput = document.getElementById("start-time-input");
+  const endTimeInput = document.getElementById("end-time-input");
+  titleInput.value = "";
+  dateInput.value = "";
+  startTimeInput.value = "";
+  endTimeInput.value = "";
+}
+
 // if we want to have a  "remove-all tasks button"
 
 // function clearAllTask() {
 //   localStorage.clear();
 //   showItem();
 // }
+
+
+
