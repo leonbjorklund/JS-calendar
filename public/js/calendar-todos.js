@@ -20,22 +20,35 @@ function filterMonthTodos(allLocalTodos) {
 // Creating the icon elements
 
 // Declare type here?
-class icon {
-    constructor(date, number) {
-        this.date = date;
-        this.number = number
-    }
-}
 
 function renderTodoIcons(openMonthTodos) {
     // Loops through objects, checks date
-    for (todo of openMonthTodos) {
-        const todoDate = todo.date.split('-')[2];
-    }
-    // Creates a new object with class icon
+    const iconArray = createIconArray(openMonthTodos);
+    //Creates a new object with class icon
     // If already exsists, adds to number
     // Adds object to array
     // Send array to rendering function
+}
+
+function createIconArray(openMonthTodos) {
+    class Icon {
+        constructor(date, number) {
+            this.date = date;
+            this.number = number
+        }
+    }
+    const iconArray = [];
+    for (todo of openMonthTodos) {
+        const todoDate = todo.date.split('-')[2];
+        const existingIcon = iconArray.some(icon => icon.date === todoDate);
+        if (existingIcon) {
+            const index = iconArray.findIndex(icon => icon.date === todoDate);
+            iconArray[index].number += 1;
+        } else {
+            iconArray.push(new Icon(todoDate, 1));
+        }
+        console.log(iconArray);
+    }
 }
 
 // Store to some kind of variable
