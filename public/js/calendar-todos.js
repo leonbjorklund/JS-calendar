@@ -1,11 +1,19 @@
-// Get todos from local storage
+// Getting data from local storage.
+
+/** Gets todo list data from local storage */
 function getMonthTodos() {
     const allLocalTodos = JSON.parse(localStorage.getItem('localItem'));
-    const openMonthTodos = filterMonthTodos(allLocalTodos);
-    renderTodoIcons(openMonthTodos);
+    if (allLocalTodos) {
+        const openMonthTodos = filterMonthTodos(allLocalTodos);
+        renderTodoIcons(openMonthTodos);
+    }
 }
 
-// Get all from current month
+/**
+ * Filters out current month's todos from all saved locally.
+ * @param {Array.<Object>} allLocalTodos List of all todos saved locally.
+ * @returns {Array.<Object>} List of all todos in current month.
+ */
 function filterMonthTodos(allLocalTodos) {
     const openMonthTodos = [];
     for (const todo of allLocalTodos) {
@@ -17,22 +25,38 @@ function filterMonthTodos(allLocalTodos) {
     return openMonthTodos;
 }
 
-// Creating the icon elements
-
-// Declare type here?
-
+/**
+ * Calls functions responsible for rendering todo icons to the calendar.
+ * @param {Array.<Object>} openMonthTodos 
+ */
 function renderTodoIcons(openMonthTodos) {
     const iconArray = createIconArray(openMonthTodos);
     createIconElements(iconArray);
 }
 
-function createIconArray(openMonthTodos) {
-    class Icon {
-        constructor(date, number) {
-            this.date = date;
-            this.number = number
-        }
+
+// Creating elements and appending to DOM.
+
+/**
+ * @typedef {Object} Icon Contains properties of the HTML element to be rendered tot he calendar.
+ * @property {number} date The date and daySquare element ID that the element will be appended to.
+ * @property {number} number The number of todos assigned to that day.
+ * @property {string} class The class to be added to the element upon creation.
+ */
+class Icon {
+    constructor(date, number) {
+        this.date = date;
+        this.number = number;
     }
+    class = 'todo-icon';
+}
+
+/**
+ * Creates an array of Icon class objects describing the html elements to be rendered.
+ * @param {Array.<Object>} openMonthTodos 
+ * @returns {Array.<Object>} Array of Icon objects.
+ */
+function createIconArray(openMonthTodos) {
     const iconArray = [];
     for (todo of openMonthTodos) {
         const todoDate = todo.date.split('-')[2];
@@ -46,21 +70,15 @@ function createIconArray(openMonthTodos) {
     return iconArray;
 }
 
+/**
+ * Creates DOM elements using the data from the Icon array.
+ * @param {Array.<Object>} iconArray 
+ */
 function createIconElements(iconArray) {
     for (const icon of iconArray) {
         const iconDiv = document.createElement('div');
         iconDiv.innerText = icon.number;
+        iconDiv.classList.add(icon.class);
         document.getElementById(icon.date).appendChild(iconDiv);
     }
 }
-
-// Store to some kind of variable
-
-// Check variable for a todo from the current date during day square creation
-
-// Show number of todos found
-
-// Should update when a todo is added.
-// Todos will have to be mapped to the calendar separately from it's rendering.
-// Todos rendering can then be called again with each addition or removal of a todo.
-// Perhaps only call the function if the addition or removal happens on the current openMonth to avoid unnecessary work.
