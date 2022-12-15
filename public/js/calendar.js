@@ -37,7 +37,6 @@ function runCalendar(month, year) {
     openMonth.monthNr = month;
     openMonth.year = year;
     renderMonth();
-    addMonthChangeListeners();
 }
 
 /** 
@@ -45,12 +44,14 @@ function runCalendar(month, year) {
  * Adds month change listeners.
 */
 async function renderMonth() {
+    removeMonthChangeListeners();
     getMonthData();
-    clearDays();
     await getHols();
+    clearDays();
     renderHead();
     renderDays();
     getMonthTodos();
+    addMonthChangeListeners();
 }
 
 /** Clears current days of the month from page. */
@@ -188,13 +189,15 @@ function addLastBorder(calendarWrapper) {
 
 /** Adds listeners for changing month to previous and next */
 function addMonthChangeListeners() {
-    document.getElementById('previous-month-button').addEventListener('click', () => {
-        changeMonth(-1);
-    });
-    document.getElementById('next-month-button').addEventListener('click', () => {
-        changeMonth(1);
-    });
+    document.getElementById('previous-month-button').addEventListener('click', monthDown);
+    document.getElementById('next-month-button').addEventListener('click', monthUp);
     addEventListener('keydown', keyMonthChange);
+}
+
+function removeMonthChangeListeners() {
+    document.getElementById('previous-month-button').removeEventListener('click', monthDown);
+    document.getElementById('next-month-button').removeEventListener('click', monthUp);
+    removeEventListener('keydown', keyMonthChange);
 }
 
 /**
@@ -203,9 +206,9 @@ function addMonthChangeListeners() {
  */
 function keyMonthChange(e) {
     if (e.key === 'ArrowLeft') {
-        changeMonth(-1);
+        monthDown();
     } else if (e.key === 'ArrowRight') {
-        changeMonth(1);
+        monthUp();
     };
 }
 
@@ -213,13 +216,22 @@ function keyMonthChange(e) {
  * Changes month up or down according to the increment parameter.
  * @param {number} increment
  */
-function changeMonth(increment) {
-    // clearDays();
-    openMonth.monthNr += increment;
+function monthDown() {
+    openMonth.monthNr -= 1;
     if (openMonth.monthNr < 0) {
         openMonth.year -= 1;
         openMonth.monthNr = 11;
-    } else if (openMonth.monthNr > 11) {
+    }
+    renderMonth();
+}
+
+/**
+ * Changes month up or down according to the increment parameter.
+ * @param {number} increment
+ */
+function monthUp() {
+    openMonth.monthNr += 1;
+    if (openMonth.monthNr > 11) {
         openMonth.year += 1;
         openMonth.monthNr = 0;
     }

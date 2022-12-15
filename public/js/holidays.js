@@ -20,7 +20,7 @@ async function getAllDays() {
 /**
  * Filters out holiday day objects from days of the month.
  * @param {Array.<Object>} allDays All day objects in the month.
- * @returns {Array.<Object} An array of holiday day objects.
+ * @returns {Array.<Object>} An array of holiday day objects.
  */
 function getHolArray(allDays) {
     const hollibobs = [];
