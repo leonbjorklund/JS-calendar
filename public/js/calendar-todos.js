@@ -40,15 +40,15 @@ function createIconArray(openMonthTodos) {
     const iconArray = [];
     for (todo of openMonthTodos) {
         const todoDate = todo.date.split('-')[2];
-        const existingIcon = iconArray.some(icon => icon.date === todoDate);
-        if (existingIcon) {
-            const index = iconArray.findIndex(icon => icon.date === todoDate);
-            iconArray[index].number += 1;
+        const iconIndex = iconArray.findIndex(icon => icon.date === todoDate);
+        if (iconIndex >= 0) {
+            iconArray[iconIndex].number += 1;
         } else {
             iconArray.push(new Icon(todoDate, 1));
         }
-        console.log(iconArray);
     }
+    console.log(iconArray);
+    return iconArray;
 }
 
 // Store to some kind of variable
