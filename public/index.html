@@ -14,6 +14,7 @@
     <script src="js/calendar.js"></script>
     <script src="js/holidays.js"></script>
     <script src="js/today.js"></script>
+    <script src="js/todos.js"></script>
     <script src="js/calendar-todos.js"></script>
     <link rel="stylesheet" href="main.css" />
     <link rel="stylesheet" href="aside.css" />
@@ -31,12 +32,12 @@
 
         <div class="timeDaydateLowerWrapper">
           <div id="displayTodaysDay"></div>
-          <div id="displayTodaysDateMonth">h</div>
+          <div id="displayTodaysDateMonth"></div>
         </div>
       </div>
       <div id="todo">To do-list</div>
 
-      <button id="new-event-button">+ New Task</button>
+      <button data-cy="todo-reveal-form" id="new-event-button">+ New Task</button>
       <div id="new-event-canvas">
         <button id="cancel-event-button">X</button>
         <form onsubmit="return false;" id="input-form">
@@ -68,13 +69,13 @@
             id="end-time-input"
             autocomplete="off"
           />
-          <button id="add-task-button">Add Task</button>
+          <button data-cy="save-todo" id="save-task-button"></button>
         </form>
       </div>
 
-      <div id="tasks-canvas" data-cy="todo-list"></div>
-      <!-- <button class="clearAllTask" onclick="clearAllTask()">Clear all tasks</button> -->
-    <script src="js/todos.js"></script>
+      <div id="tasks-canvas"></div>
+      <!-- <button class="clearAllTask" onclick=∏"clearAllTask()">Clear all tasks</button> -->
+    
     </aside>
 
     <main>
