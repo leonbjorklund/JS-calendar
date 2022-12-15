@@ -67,7 +67,12 @@ function createTodo() {
   resetForm();
 
   //displaying task
+  titleInput.value = "";
+  dateInput.value = "";
+  startTimeInput.value = "";
+  endTimeInput.value = "";
   showItem();
+  getMonthTodos();
 }
 
 function showItem() {
