@@ -7,20 +7,27 @@ function activeDay(event) {
     .filter((day) => day !== target)
     .forEach((day) => day.classList.remove("red"));
 
+  const wasActive = target.classList.contains("red");
+
   // Puts toggle on the targeted day
   target.classList.toggle("red");
 
-  // Gets the date from the day that is clicked on
-  const date = new Date(target.dataset.todaysDate);
+  // No value = undefined
+  let filterAndMatchDates;
 
-  // Gets the date from localstorage
-  const dateFromLS = JSON.parse(localStorage.getItem("localItem"));
+  if (!wasActive) {
+    // Gets the date from the day that is clicked on
+    const date = new Date(target.dataset.todaysDate);
 
-  // Filters and matches the clicked on date with the dates in localstorage. Makes them both to string to compare
-  const filterAndMatchDates = dateFromLS.filter(
-    (item) =>
-      new Date(item.date).toLocaleDateString() === date.toLocaleDateString()
-  );
+    // Gets the date from localstorage
+    const dateFromLS = JSON.parse(localStorage.getItem("localItem"));
 
-  console.log(filterAndMatchDates);
+    // Filters and matches the clicked on date with the dates in localstorage. Makes them both to string to compare
+    filterAndMatchDates = dateFromLS.filter(
+      (item) =>
+        new Date(item.date).toLocaleDateString() === date.toLocaleDateString()
+    );
+  }
+
+  showItem(filterAndMatchDates);
 }
