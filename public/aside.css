@@ -77,6 +77,10 @@ ul {
   align-items: center;
 }
 
+.event-block > #text {
+  font-size: 2rem;
+}
+
 #position-button {
   display: flex;
   flex-direction: row-reverse;
