@@ -22,12 +22,8 @@ function filterMonthTodos(allLocalTodos) {
 // Declare type here?
 
 function renderTodoIcons(openMonthTodos) {
-    // Loops through objects, checks date
     const iconArray = createIconArray(openMonthTodos);
-    //Creates a new object with class icon
-    // If already exsists, adds to number
-    // Adds object to array
-    // Send array to rendering function
+    createIconElements(iconArray);
 }
 
 function createIconArray(openMonthTodos) {
@@ -47,8 +43,15 @@ function createIconArray(openMonthTodos) {
             iconArray.push(new Icon(todoDate, 1));
         }
     }
-    console.log(iconArray);
     return iconArray;
+}
+
+function createIconElements(iconArray) {
+    for (const icon of iconArray) {
+        const iconDiv = document.createElement('div');
+        iconDiv.innerText = icon.number;
+        document.getElementById(icon.date).appendChild(iconDiv);
+    }
 }
 
 // Store to some kind of variable

@@ -148,6 +148,7 @@ function createDaySquares(calendarWrapper) {
         const daySquare = document.createElement('div');
         daySquare.innerText = i + 1;
         daySquare.classList.add('day');
+        daySquare.id = i + 1;
         renderHoliday(i, daySquare);
         setBorder(i, daySquare);
         calendarWrapper.append(daySquare);
