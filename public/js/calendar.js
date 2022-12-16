@@ -44,13 +44,17 @@ function runCalendar(month, year) {
  * Adds month change listeners.
 */
 async function renderMonth() {
-    removeMonthChangeListeners();
+    // removeMonthChangeListeners();
+    removeNavButtons();
     getMonthData();
     await getHols();
     clearDays();
     renderHead();
     renderDays();
     getMonthTodos();
+    if (document.getElementById('nav-button-container').innerHTML === '') {
+        renderNavButtons();
+    }
     addMonthChangeListeners();
 }
 
@@ -236,4 +240,23 @@ function monthUp() {
         openMonth.monthNr = 0;
     }
     renderMonth();
+}
+
+function removeNavButtons() {
+    const navButtons = document.querySelectorAll('.nav-button');
+    navButtons.forEach(button => button.remove());
+}
+
+function renderNavButtons() {
+    const navButton1 = document.createElement('button');
+    navButton1.classList.add('nav-button');
+    navButton1.id = 'previous-month-button';
+    navButton1.setAttribute('data-cy', 'prev-month');
+    navButton1.innerText = '<-';
+    const navButton2 = document.createElement('button');
+    navButton2.classList.add('nav-button');
+    navButton2.id = 'next-month-button';
+    navButton2.innerText = '->';
+    navButton2.setAttribute('data-cy', 'next-month');
+    document.getElementById('nav-button-container').append(navButton1, navButton2);
 }
