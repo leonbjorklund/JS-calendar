@@ -5,11 +5,21 @@ function runTodo() {
   const cancelEventButton = document.getElementById("cancel-event-button");
   const formInput = document.getElementById("input-form");
 
-  window.addEventListener("load", showItem);
+  window.addEventListener("load", () => {
+    showItem();
+  });
   newEventButton.addEventListener("click", toggleCreateEventCanvas);
+  // newEventButton.addEventListener('click', () => {
+  //   saveTaskButton.removeEventListener('click',  function () {
+  //     saveEdit(index);
+  //   });
+  //   saveTaskButton.addEventListener('click', createTodo);
+  // });
   saveTaskButton.addEventListener("click", createTodo);
   cancelEventButton.addEventListener("click", toggleCreateEventCanvas);
-  formInput.addEventListener("input",() => (saveTaskButton.innerHTML = "Save Task")
+  formInput.addEventListener(
+    "input",
+    () => (saveTaskButton.innerHTML = "Save Task")
   );
 }
 
@@ -23,6 +33,11 @@ function toggleCreateEventCanvas() {
     newEventCanvas.style.display = "block";
   }
   saveTaskButton.innerHTML = "Save Task";
+  const dateInput = newEventCanvas.querySelector("#date-input");
+  if (dateInput) {
+    const date = localStorage.getItem("activeDay");
+    dateInput.valueAsDate = date ? new Date(date) : undefined;
+  }
 }
 
 function createTodo() {
@@ -50,7 +65,8 @@ function createTodo() {
 
   // if user-input exists, give to local-storage item "localItem"
   if (hasValue) {
-    let taskList = getTaskList();
+    let taskList = getTaskList(true);
+    // push task-object to taskList array and set localStorage-item
     // push task-object to taskList array and set localStorage-item
     taskList.push(task);
     saveTaskList(taskList);
@@ -67,11 +83,12 @@ function createTodo() {
 }
 
 function showItem() {
-  let taskList = getTaskList();
+  const taskList = getTaskList();
+
   let html = "";
   let itemShow = document.getElementById("tasks-canvas");
 
-  // create an unordered task list to hold all tasks
+  // create an unordered task list to hold all task
   html += `<ul data-cy="todo-list">`;
   taskList.forEach((_, index) => {
     // add a new list item for each task
@@ -90,6 +107,7 @@ function showItem() {
   });
   // close the unordered task list
   html += "</ul>";
+
   // give list to tasks-canvas div
   itemShow.innerHTML = html;
 }
@@ -114,7 +132,7 @@ function editTodo(index) {
   const dateInput = document.getElementById("date-input");
   const startTimeInput = document.getElementById("start-time-input");
   const endTimeInput = document.getElementById("end-time-input");
-  let taskList = getTaskList();
+  let taskList = getTaskList(true);
 
   titleInput.value = taskList[index].title;
   dateInput.value = taskList[index].date;
@@ -133,7 +151,7 @@ function saveEdit(index) {
   const startTimeInput = document.getElementById("start-time-input");
   const endTimeInput = document.getElementById("end-time-input");
 
-  let taskList = getTaskList();
+  let taskList = getTaskList(true);
   taskList[index].title = titleInput.value;
   taskList[index].date = dateInput.value;
   taskList[index].startTime = startTimeInput.value;
@@ -145,13 +163,17 @@ function saveEdit(index) {
   resetForm();
 }
 
-// returns the stored task list or a new task list if it doesn't exist
-function getTaskList() {
-  let localItems = JSON.parse(localStorage.getItem("localItem"));
-  if (localItems === null) {
-    taskList = [];
-  } else {
-    taskList = localItems;
+function getTaskList(skipFilter) {
+  const activeDay = localStorage.getItem("activeDay");
+
+  const taskList = JSON.parse(localStorage.getItem("localItem")) || [];
+  if (skipFilter) {
+    return taskList;
+  }
+  if (activeDay) {
+    return taskList.filter(
+      (item) => new Date(item.date).toLocaleDateString("sv-SE") === activeDay
+    );
   }
   return taskList;
 }
@@ -170,3 +192,10 @@ function resetForm() {
   startTimeInput.value = "";
   endTimeInput.value = "";
 }
+
+// if we want to have a  "remove-all tasks button"
+
+// function clearAllTask() {
+//   localStorage.clear();
+//   showItem();
+// }
