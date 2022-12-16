@@ -100,8 +100,8 @@ function showItem() {
       }
     }
     // add a delete and an edit button for each task
-    html += `<button data-cy="delete-todo-button" onclick="removeTodo(${index})">x</button>`;
-    html += `<button data-cy="edit-todo-button" onclick="editTodo(${index})">Edit</button>`;
+    html += `<div id="position-button"><button data-cy="delete-todo-button" onclick="removeTodo(${index})">x</button>`;
+    html += `<button data-cy="edit-todo-button" onclick="editTodo(${index})">Edit</button></div>`;
     // close the list item, done with current task
     html += "</li>";
   });

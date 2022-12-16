@@ -37,43 +37,44 @@
         </div>
       </div>
       <div id="todo">To do-list</div>
-
-      <button data-cy="todo-reveal-form" id="new-event-button">
-        + New Task
-      </button>
-      <div id="new-event-canvas">
-        <button id="cancel-event-button">X</button>
-        <form onsubmit="return false;" id="input-form">
-          <input
-            type="text"
-            name="title-input"
-            id="title-input"
-            data-cy="todo-task-input"
-            placeholder="Title"
-            autocomplete="off"
-            value=""
-          />
-          <input
-            type="date"
-            name="date-input"
-            id="date-input"
-            data-cy="todo-date-input"
-            autocomplete="off"
-          />
-          <input
-            type="time"
-            name="start-time-input"
-            id="start-time-input"
-            autocomplete="off"
-          />
-          <input
-            type="time"
-            name="end-time-input"
-            id="end-time-input"
-            autocomplete="off"
-          />
-          <button data-cy="save-todo" id="save-task-button"></button>
-        </form>
+      <div id="box-shadow">
+        <button data-cy="todo-reveal-form" id="new-event-button">
+          + New Task
+        </button>
+        <div id="new-event-canvas">
+          <button id="cancel-event-button">X</button>
+          <form onsubmit="return false;" id="input-form">
+            <input
+              type="text"
+              name="title-input"
+              id="title-input"
+              data-cy="todo-task-input"
+              placeholder="Title"
+              autocomplete="off"
+              value=""
+            />
+            <input
+              type="date"
+              name="date-input"
+              id="date-input"
+              data-cy="todo-date-input"
+              autocomplete="off"
+            />
+            <input
+              type="time"
+              name="start-time-input"
+              id="start-time-input"
+              autocomplete="off"
+            />
+            <input
+              type="time"
+              name="end-time-input"
+              id="end-time-input"
+              autocomplete="off"
+            />
+            <button data-cy="save-todo" id="save-task-button"></button>
+          </form>
+        </div>
       </div>
 
       <div id="tasks-canvas"></div>
