@@ -34,10 +34,9 @@ const openMonth = {
 
 /** Calls rendeer function for the first month and event listener functions. */
 function runCalendar(month, year) {
-  openMonth.monthNr = month;
-  openMonth.year = year;
-  renderMonth();
-  addMonthChangeListeners();
+    openMonth.monthNr = month;
+    openMonth.year = year;
+    renderMonth();
 }
 
 /**
@@ -45,12 +44,14 @@ function runCalendar(month, year) {
  * Adds month change listeners.
  */
 async function renderMonth() {
-  getMonthData();
-  clearDays();
-  await getHols();
-  renderHead();
-  renderDays();
-  getMonthTodos();
+    removeMonthChangeListeners();
+    getMonthData();
+    await getHols();
+    clearDays();
+    renderHead();
+    renderDays();
+    getMonthTodos();
+    addMonthChangeListeners();
 }
 
 /** Clears current days of the month from page. */
@@ -201,17 +202,26 @@ function addLastBorder(calendarWrapper) {
 
 // NAVIGATION FUNCTIONS
 
-/** Adds listeners for changing month to previous and next */
+/** Adds listeners for changing month to previous and next. */
 function addMonthChangeListeners() {
-  document
-    .getElementById("previous-month-button")
-    .addEventListener("click", () => {
-      changeMonth(-1);
-    });
-  document.getElementById("next-month-button").addEventListener("click", () => {
-    changeMonth(1);
-  });
-  addEventListener("keydown", keyMonthChange);
+    const previousMonth = document.getElementById('previous-month-button');
+    const nextMonth = document.getElementById('next-month-button');
+    previousMonth.addEventListener('click', monthDown);
+    nextMonth.addEventListener('click', monthUp);
+    previousMonth.setAttribute('data-cy', 'prev-month');
+    nextMonth.setAttribute('data-cy', 'next-month');
+    addEventListener('keydown', keyMonthChange);
+}
+
+/** Removes listeners while page is loading. */
+function removeMonthChangeListeners() {
+    const previousMonth = document.getElementById('previous-month-button');
+    const nextMonth = document.getElementById('next-month-button');
+    previousMonth.removeEventListener('click', monthDown);
+    nextMonth.removeEventListener('click', monthUp);
+    previousMonth.removeAttribute('data-cy');
+    nextMonth.removeAttribute('data-cy');
+    removeEventListener('keydown', keyMonthChange);
 }
 
 /**
@@ -219,26 +229,35 @@ function addMonthChangeListeners() {
  * @param {KeyboardEvent} e
  */
 function keyMonthChange(e) {
-  if (e.key === "ArrowLeft") {
-    changeMonth(-1);
-  } else if (e.key === "ArrowRight") {
-    changeMonth(1);
-  }
+    if (e.key === 'ArrowLeft') {
+        monthDown();
+    } else if (e.key === 'ArrowRight') {
+        monthUp();
+    };
 }
 
 /**
  * Changes month up or down according to the increment parameter.
  * @param {number} increment
  */
-function changeMonth(increment) {
-  // clearDays();
-  openMonth.monthNr += increment;
-  if (openMonth.monthNr < 0) {
-    openMonth.year -= 1;
-    openMonth.monthNr = 11;
-  } else if (openMonth.monthNr > 11) {
-    openMonth.year += 1;
-    openMonth.monthNr = 0;
-  }
-  renderMonth();
+function monthDown() {
+    openMonth.monthNr -= 1;
+    if (openMonth.monthNr < 0) {
+        openMonth.year -= 1;
+        openMonth.monthNr = 11;
+    }
+    renderMonth();
+}
+
+/**
+ * Changes month up or down according to the increment parameter.
+ * @param {number} increment
+ */
+function monthUp() {
+    openMonth.monthNr += 1;
+    if (openMonth.monthNr > 11) {
+        openMonth.year += 1;
+        openMonth.monthNr = 0;
+    }
+    renderMonth();
 }
