@@ -44,7 +44,7 @@ function runCalendar(month, year) {
  * Adds month change listeners.
 */
 async function renderMonth() {
-    // removeMonthChangeListeners();
+    removeMonthChangeListeners();
     removeNavButtons();
     getMonthData();
     await getHols();
@@ -52,9 +52,6 @@ async function renderMonth() {
     renderHead();
     renderDays();
     getMonthTodos();
-    if (document.getElementById('nav-button-container').innerHTML === '') {
-        renderNavButtons();
-    }
     addMonthChangeListeners();
 }
 
@@ -191,16 +188,25 @@ function addLastBorder(calendarWrapper) {
 
 // NAVIGATION FUNCTIONS
 
-/** Adds listeners for changing month to previous and next */
+/** Adds listeners for changing month to previous and next. */
 function addMonthChangeListeners() {
-    document.getElementById('previous-month-button').addEventListener('click', monthDown);
-    document.getElementById('next-month-button').addEventListener('click', monthUp);
+    const previousMonth = document.getElementById('previous-month-button');
+    const nextMonth = document.getElementById('next-month-button');
+    previousMonth.addEventListener('click', monthDown);
+    nextMonth.addEventListener('click', monthUp);
+    previousMonth.setAttribute('data-cy', 'prev-month');
+    nextMonth.setAttribute('data-cy', 'next-month');
     addEventListener('keydown', keyMonthChange);
 }
 
+/** Removes listeners while page is loading. */
 function removeMonthChangeListeners() {
-    document.getElementById('previous-month-button').removeEventListener('click', monthDown);
-    document.getElementById('next-month-button').removeEventListener('click', monthUp);
+    const previousMonth = document.getElementById('previous-month-button');
+    const nextMonth = document.getElementById('next-month-button');
+    previousMonth.removeEventListener('click', monthDown);
+    nextMonth.removeEventListener('click', monthUp);
+    previousMonth.removeAttribute('data-cy');
+    nextMonth.removeAttribute('data-cy');
     removeEventListener('keydown', keyMonthChange);
 }
 
@@ -240,23 +246,4 @@ function monthUp() {
         openMonth.monthNr = 0;
     }
     renderMonth();
-}
-
-function removeNavButtons() {
-    const navButtons = document.querySelectorAll('.nav-button');
-    navButtons.forEach(button => button.remove());
-}
-
-function renderNavButtons() {
-    const navButton1 = document.createElement('button');
-    navButton1.classList.add('nav-button');
-    navButton1.id = 'previous-month-button';
-    navButton1.setAttribute('data-cy', 'prev-month');
-    navButton1.innerText = '<-';
-    const navButton2 = document.createElement('button');
-    navButton2.classList.add('nav-button');
-    navButton2.id = 'next-month-button';
-    navButton2.innerText = '->';
-    navButton2.setAttribute('data-cy', 'next-month');
-    document.getElementById('nav-button-container').append(navButton1, navButton2);
 }
