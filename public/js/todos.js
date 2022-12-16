@@ -82,20 +82,14 @@ function createTodo() {
   getMonthTodos();
 }
 
-// TODO: Send in Date (yyyy-mm-dd) instead of taskList.
 function showItem() {
-  let cyName = "todo-list";
-  if (localStorage.getItem("activeDay")) {
-    cyName = "filtered-todo-list";
-  }
-
   const taskList = getTaskList();
 
   let html = "";
   let itemShow = document.getElementById("tasks-canvas");
 
   // create an unordered task list to hold all task
-  html += `<ul data-cy="${cyName}">`;
+  html += `<ul data-cy="todo-list">`;
   taskList.forEach((_, index) => {
     // add a new list item for each task
     html += `<li class="event-block">`;
@@ -120,7 +114,7 @@ function showItem() {
 
 // remove item
 function removeTodo(index) {
-  let taskList = getTaskList(true);
+  let taskList = getTaskList();
   taskList.splice(index, 1);
   saveTaskList(taskList);
   showItem();
@@ -169,8 +163,6 @@ function saveEdit(index) {
   resetForm();
 }
 
-// returns the stored task list or a new task list if it doesn't exist
-// TODO: Take in date and do filtering here
 function getTaskList(skipFilter) {
   const activeDay = localStorage.getItem("activeDay");
 
