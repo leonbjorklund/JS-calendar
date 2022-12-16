@@ -1,33 +1,32 @@
 /* Reusable classes */
 
 .flex-row {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
-
 
 /* Day block classes */
 
 .day {
-    padding: 0.5rem;
-    min-height: 3rem;
-  }
+  padding: 0.5rem;
+  min-height: 3rem;
+}
 
 .blank {
-    padding: 0.5rem;
-    min-height: 3rem;
+  padding: 0.5rem;
+  min-height: 3rem;
 }
 
 .border-bottom {
-    border-bottom: 2px solid black;
+  border-bottom: 2px solid black;
 }
 
 .border-left {
-    border-left: 2px solid black; 
+  border-left: 2px solid black;
 }
