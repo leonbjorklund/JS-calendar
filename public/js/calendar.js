@@ -45,7 +45,6 @@ function runCalendar(month, year) {
 */
 async function renderMonth() {
     removeMonthChangeListeners();
-    removeNavButtons();
     getMonthData();
     await getHols();
     clearDays();
