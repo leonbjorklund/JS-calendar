@@ -11,9 +11,55 @@
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
+
+/* Calendar body */
+
+main {
+  grid-row: 2;
+  grid-column: 2 / 2;
+  margin: 0 2rem;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+
+/* Day headers */
+
+.dayHeaders {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+#monday {
+  grid-column: 1/1;
+}
+#tuesday {
+  grid-column: 2/2;
+}
+#wednesday {
+  grid-column: 3/3;
+}
+#thursday {
+  grid-column: 4/4;
+}
+#friday {
+  grid-column: 5/5;
+}
+#saturday {
+  grid-column: 6/6;
+}
+#sunday {
+  grid-column: 7/7;
+}
+
+
 /* Day block classes */
 
 .day {
+  position: relative;
   padding: 0.5rem;
   min-height: 3rem;
 }
@@ -29,4 +75,41 @@
 
 .border-left {
   border-left: 2px solid black;
+}
+
+
+/* Todos number icons */
+
+.todo-icon {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+  border-radius: 50%;
+  height: 1.5rem;
+  width: 1.5rem;
+  background: #fffba4;
+}
+
+
+/* Holiday names */
+
+.holidiv {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.2rem 0;
+  font-size: 14px;
+  text-align: center;
+  background-color: #fffba4;
+}
+
+
+/* Day selection */
+
+.active {
+  background-color: #ffa4a4;
 }

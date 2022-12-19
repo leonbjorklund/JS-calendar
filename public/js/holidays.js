@@ -44,6 +44,7 @@ function renderHoliday(i, daySquare) {
     if (holidate === i + 1) {
         const holidiv = document.createElement('div');
         holidiv.innerText = day.helgdag;
+        holidiv.classList.add('holidiv');
         daySquare.appendChild(holidiv);
     }
     }
