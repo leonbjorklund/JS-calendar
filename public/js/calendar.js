@@ -144,7 +144,6 @@ function renderDays() {
 function renderBlanks(calendarWrapper) {
   for (let i = 0; i < openMonth.firstWeekday - 1; i++) {
     const blankDay = document.createElement("div");
-    blankDay.classList.add("day");
     blankDay.classList.add("blank");
     blankDay.classList.add("border-bottom");
     calendarWrapper.append(blankDay);
@@ -159,7 +158,7 @@ function createDaySquares(calendarWrapper) {
   for (let i = 0; i < openMonth.days.length; i++) {
     const daySquare = document.createElement("div");
     daySquare.innerText = i + 1;
-    daySquare.classList.add("day");
+    daySquare.classList.add('day',);
     daySquare.id = i + 1;
     renderHoliday(i, daySquare);
     setBorder(i, daySquare);
@@ -194,7 +193,7 @@ function setBorder(i, daySquare) {
 function addLastBorder(calendarWrapper) {
   if (openMonth.lastWeekday != 7) {
     const lastSquare = document.createElement("div");
-    lastSquare.classList.add("day");
+    lastSquare.classList.add("blank");
     lastSquare.classList.add("border-left");
     calendarWrapper.append(lastSquare);
   }
