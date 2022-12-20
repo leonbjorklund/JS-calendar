@@ -40,11 +40,6 @@ function toggleCreateEventCanvas() {
   }
 }
 
-// localStorage.setItem('idCount', 0);
-// const selfUpdatingId = localStorage.getItem("idCount");
-// let taskNumber = 2;
-// let theTodoCounter = localStorage.setItem("theTodoCounter", 2);
-
 function createTodo() {
   let uniqueId = self.crypto.randomUUID();
 
@@ -74,7 +69,6 @@ function createTodo() {
   // if user-input exists, give to local-storage item "localItem"
   if (hasValue) {
     let taskList = getTaskList(true);
-    // push task-object to taskList array and set localStorage-item
     // push task-object to taskList array and set localStorage-item
     taskList.push(task);
     saveTaskList(taskList);
