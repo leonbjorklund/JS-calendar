@@ -92,16 +92,15 @@ function showItem() {
 
   // create an unordered task list to hold all task
   html += `<ul data-cy="todo-list">`;
-  taskList.forEach((object, index) => {
+  taskList.forEach((task) => {
+    const todoId = task.id;
     // add a new list item for each task
     html += `<li class="event-block">`;
-    // only add fields (e.g. title, date etc) if they are not empty
-    for (const elem in taskList[index]) {
-      if (taskList[index][elem] != "") {
-        html += `${taskList[index][elem]}</br>`;
-      }
-    }
-    const todoId = object.id;
+    html += `${task.title}</br>`;
+    html += `${task.date}</br>`;
+    html += `${task.startTime}</br>`;
+    html += `${task.endTime}</br>`;
+
     // add a delete and an edit button for each task
     html += `<div id="position-button"><button data-cy="delete-todo-button" onclick="removeTodo('${todoId}')"> X </button>`;
     html += `<button data-cy="edit-todo-button" onclick="editTodo('${todoId}')">Edit</button></div>`;
