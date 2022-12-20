@@ -5,9 +5,12 @@ body {
 }
 
 aside {
-  margin: 0;
+  margin: 0 2rem;
 }
 
-.day {
-  min-height: auto;
+
+/* Day squares */
+
+.holidiv {
+  font-size: 10px;
 }
