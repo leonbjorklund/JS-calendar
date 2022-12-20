@@ -40,7 +40,14 @@ function toggleCreateEventCanvas() {
   }
 }
 
+// localStorage.setItem('idCount', 0);
+// const selfUpdatingId = localStorage.getItem("idCount");
+// let taskNumber = 2;
+// let theTodoCounter = localStorage.setItem("theTodoCounter", 2);
+
 function createTodo() {
+  let uniqueId = self.crypto.randomUUID();
+
   const newEventCanvas = document.getElementById("new-event-canvas");
   const saveTaskButton = document.getElementById("save-task-button");
 
@@ -55,6 +62,7 @@ function createTodo() {
     date: dateInput.value,
     startTime: startTimeInput.value,
     endTime: endTimeInput.value,
+    id: uniqueId,
   };
 
   // close create event canvas when new task is created
@@ -90,7 +98,7 @@ function showItem() {
 
   // create an unordered task list to hold all task
   html += `<ul data-cy="todo-list">`;
-  taskList.forEach((_, index) => {
+  taskList.forEach((object, index) => {
     // add a new list item for each task
     html += `<li class="event-block">`;
     // only add fields (e.g. title, date etc) if they are not empty
@@ -99,9 +107,10 @@ function showItem() {
         html += `${taskList[index][elem]}</br>`;
       }
     }
+    const todoId = object.id;
     // add a delete and an edit button for each task
-    html += `<div id="position-button"><button data-cy="delete-todo-button" onclick="removeTodo(${index})">x</button>`;
-    html += `<button data-cy="edit-todo-button" onclick="editTodo(${index})">Edit</button></div>`;
+    html += `<div id="position-button"><button data-cy="delete-todo-button" onclick="removeTodo('${todoId}')"> X </button>`;
+    html += `<button data-cy="edit-todo-button" onclick="editTodo('${todoId}')">Edit</button></div>`;
     // close the list item, done with current task
     html += "</li>";
   });
@@ -113,16 +122,19 @@ function showItem() {
 }
 
 // remove item
-function removeTodo(index) {
-  let taskList = getTaskList();
-  taskList.splice(index, 1);
+function removeTodo(todoId) {
+  const taskList = getTaskList(true);
+  const taskIndex = taskList.findIndex((task) => task.id === todoId);
+  taskList.splice(taskIndex, 1);
   saveTaskList(taskList);
   showItem();
   getMonthTodos();
 }
 
-function editTodo(index) {
+function editTodo(todoId) {
   toggleCreateEventCanvas();
+  let taskList = getTaskList(true);
+  const index = taskList.findIndex((task) => task.id === todoId);
 
   const saveTaskButton = document.getElementById("save-task-button");
   saveTaskButton.innerHTML = "Edit Task";
@@ -132,7 +144,6 @@ function editTodo(index) {
   const dateInput = document.getElementById("date-input");
   const startTimeInput = document.getElementById("start-time-input");
   const endTimeInput = document.getElementById("end-time-input");
-  let taskList = getTaskList(true);
 
   titleInput.value = taskList[index].title;
   dateInput.value = taskList[index].date;
