@@ -85,6 +85,6 @@ function createIconElements(iconArray) {
         const iconDiv = document.createElement('div');
         iconDiv.innerText = icon.number;
         iconDiv.classList.add(icon.class);
-        document.getElementById(icon.date).appendChild(iconDiv);
+        document.getElementById(parseInt(icon.date)).appendChild(iconDiv);
     }
 }
