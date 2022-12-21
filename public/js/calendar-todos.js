@@ -24,7 +24,8 @@ function filterMonthTodos(allLocalTodos) {
     const openMonthTodos = [];
     for (const todo of allLocalTodos) {
         let splitDate = todo.date.split('-');
-        if (parseInt(splitDate[1]) === openMonth.monthNr + 1) {
+        console.log(splitDate[0], openMonth.year)
+        if (parseInt(splitDate[1]) === openMonth.monthNr + 1 && parseInt(splitDate[0]) === openMonth.year) {
             openMonthTodos.push(todo);
         }
     }
