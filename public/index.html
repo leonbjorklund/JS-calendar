@@ -19,8 +19,8 @@
     <script src="js/dayclick.js"></script>
     <link rel="stylesheet" href="main.css" />
     <link rel="stylesheet" href="aside.css" />
-    <link rel="stylesheet" href="mobile.css" media="(max-width:600px)" />
-    <link rel="stylesheet" href="css/calendar.css" />
+    <link rel="stylesheet" href="mobile.css" media="(max-width:800px)" />
+    <link rel="stylesheet" href="css/calendar.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   </head>
   <body>
     <header>Calendar</header>
@@ -96,8 +96,8 @@
       </div>
       <div class="grid" id="calendarWrapper" data-cy="calendar-body"></div>
       <div class="flex-row" id="nav-button-container">
-      <button id="previous-month-button"><-</button>
-      <button id="next-month-button">-></button>
+        <button class="nav-button" id="previous-month-button"><span class="material-symbols-outlined">arrow_back</span></button>
+        <button class="nav-button" id="next-month-button"><span class="material-symbols-outlined">arrow_forward</span></button>
       </div>
     </main>
   </body>

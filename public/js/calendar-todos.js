@@ -24,7 +24,8 @@ function filterMonthTodos(allLocalTodos) {
     const openMonthTodos = [];
     for (const todo of allLocalTodos) {
         let splitDate = todo.date.split('-');
-        if (parseInt(splitDate[1]) === openMonth.monthNr + 1) {
+        console.log(splitDate[0], openMonth.year)
+        if (parseInt(splitDate[1]) === openMonth.monthNr + 1 && parseInt(splitDate[0]) === openMonth.year) {
             openMonthTodos.push(todo);
         }
     }
@@ -85,6 +86,6 @@ function createIconElements(iconArray) {
         const iconDiv = document.createElement('div');
         iconDiv.innerText = icon.number;
         iconDiv.classList.add(icon.class);
-        document.getElementById(icon.date).appendChild(iconDiv);
+        document.getElementById(parseInt(icon.date)).appendChild(iconDiv);
     }
 }
