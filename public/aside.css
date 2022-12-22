@@ -2,7 +2,7 @@
   margin: 10px;
 }
 
-#timeDayDate {
+#timeDayDate, #box-shadow {
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
   -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
@@ -13,7 +13,8 @@
   border: none;
   width: 100%;
   background-color: #fffba4;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
   padding: 5px;
 }
 
@@ -23,10 +24,10 @@
   width: 100%;
 }
 
-#box-shadow {
-  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
-  -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+#position-button-x {
+  display: flex;
+  margin-right: 5px;
+  flex-direction: row-reverse;
 }
 
 #input-form {
@@ -38,10 +39,11 @@
 }
 
 #input-form > input, #input-form > button {
-  padding: 5px;
+  padding: 3px;
   margin-left: 5px;
   margin-right: 5px;
   font-size: 1.1rem;
+  font: inherit;
 }
 
 #input-form > button {
@@ -49,10 +51,13 @@
 }
 
 #cancel-event-button {
+  font-size: 1rem!important;
+  font-weight: 600;
   cursor: pointer;
-  position: relative;
-  left: 90%;
-  padding: 5px
+  border: 1px solid gray;
+  border-radius: 5px;
+  background: white;
+  padding: 3px 6px 2px 6px;
 }
 
 #add-task-button {
@@ -62,42 +67,48 @@
 ul {
   display: flex;
   flex-direction: column-reverse;
-  padding-right: 5px;
-  padding-left: 5px;
+  padding: 0px;
   row-gap: 5px;
 }
 
 .event-block {
+  background-color: #fffba4;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
   row-gap: 10px;
-  border: solid 1px black;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   align-items: center;
-}
-
-.event-block > #text {
-  font-size: 2rem;
+  box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
 }
 
 #position-button {
   display: flex;
   flex-direction: row-reverse;
+  column-gap: 1px;
+  margin-right: 1px;
 }
 
 #position-button > button {
   height: 100%;
-  font-size: 1.4rem;
+  font-size: 1.1rem;
+  font: inherit;
+  font-size: 1rem!important;
+  cursor: pointer;
+  border: 1px solid gray;
+  border-radius: 5px;
+  background: white;
+  padding: 3px 5px 0px 5px;
+
 }
 
 #delete-task {
   cursor:pointer;
 }
 
-.event-text {
-  font-size: 1.2rem;
-}
 
 
 
