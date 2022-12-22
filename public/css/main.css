@@ -4,7 +4,7 @@ body {
   grid-template-columns: 25% 75%;
   grid-template-rows: 20% 80%;
   height: 100vh;
-  font-family: "Helvetica", sans-serif;
+  font-family: "Suisse Int'l Medium", "Helvetica", sans-serif;
   font-weight: 400;
   background: #dfdfdf;
 }
