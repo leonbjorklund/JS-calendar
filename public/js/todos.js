@@ -99,7 +99,8 @@ function showItem() {
     html += `${task.title}</br>`;
     html += `${task.date}</br>`;
     html += `${task.startTime}</br>`;
-    html += `${task.endTime}</br>`;
+    html += `${task.endTime}`;
+
 
     // add a delete and an edit button for each task
     html += `<div id="position-button"><button data-cy="delete-todo-button" onclick="removeTodo('${todoId}')"> X </button>`;
