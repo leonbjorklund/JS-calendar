@@ -12,8 +12,8 @@ async function getHols() {
 function getAllDays() {
     return month = fetch(`https://sholiday.faboul.se/dagar/v2.1/${openMonth.year}/${openMonth.monthNr + 1}`)
         .then((response) => response.json())
-        .catch(fetch(`https://sholiday.faboul.se/dagar/v2.1/${openMonth.year}/${openMonth.monthNr + 1}`)
-        .then((response) => response.json()));
+        // .catch(fetch(`https://sholiday.faboul.se/dagar/v2.1/${openMonth.year}/${openMonth.monthNr + 1}`)
+        // .then((response) => response.json()));
 }
 
 /**
