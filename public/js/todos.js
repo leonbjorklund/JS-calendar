@@ -9,12 +9,6 @@ function runTodo() {
     showItem();
   });
   newEventButton.addEventListener("click", toggleCreateEventCanvas);
-  // newEventButton.addEventListener('click', () => {
-  //   saveTaskButton.removeEventListener('click',  function () {
-  //     saveEdit(index);
-  //   });
-  //   saveTaskButton.addEventListener('click', createTodo);
-  // });
   saveTaskButton.addEventListener("click", createTodo);
   cancelEventButton.addEventListener("click", toggleCreateEventCanvas);
   formInput.addEventListener(
@@ -197,10 +191,3 @@ function resetForm() {
   startTimeInput.value = "";
   endTimeInput.value = "";
 }
-
-// if we want to have a  "remove-all tasks button"
-
-// function clearAllTask() {
-//   localStorage.clear();
-//   showItem();
-// }
